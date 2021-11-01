@@ -43,6 +43,19 @@ public class JugadorData {
             JOptionPane.showMessageDialog(null, "No se pudo guardar el jugador ");
         }
     }
+    public void borrarJugador(int idJugador){
+      String sql = "UPDATE jugador SET activo = false WHERE idJugador = ?";
+       try {
+      PreparedStatement ps = con.prepareStatement(sql);
+      ps.setInt(1, idJugador);
+      if(ps.executeUpdate()>0){
+        JOptionPane.showMessageDialog(null, "Jugador borrado");
+      }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar Jugador");
+        }   
+   }
    public void actualizarJugador(Jugador j){
         try {
             String sql = "UPDATE jugador SET nombreApellido = ?, dni = ?, fechaNac = ?, altura = ?, peso = ?, estilo = ?, manoHabil = ?, activo = ? WHERE idJugador = ?";
