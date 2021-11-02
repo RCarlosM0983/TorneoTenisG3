@@ -56,12 +56,11 @@ public class JugadorData {
    
    public void actualizarJugador(Jugador j){
         try {
-            String sql = "UPDATE jugador SET nombreApellido = ?, dni = ?, fechaNac = ?, altura = ?, peso = ?, estilo = ?, manoHabil = ?, activo = ? WHERE idJugador = ?";
+            String sql = "UPDATE jugador SET nombreApellido = ?, dni = ?, fechaNac = ?, altura = ?, peso = ?, estilo = ?, manoHabil = ?, activo = ? WHERE id_jugador = ? ";
             
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);            
             
-            
-           ps.setString(1, j.getNombreApellido());
+            ps.setString(1, j.getNombreApellido());
             ps.setInt(2, j.getDni());
             ps.setDate(3,  Date.valueOf(j.getFechaNac()));
             ps.setDouble(4, j.getAltura());
@@ -69,8 +68,7 @@ public class JugadorData {
             ps.setString(6, j.getEstilo());
             ps.setString(7, j.getManoHabil());
             ps.setBoolean(8, j.isActivo());
-            ps.setInt(9, j.getIdJugador());
-            
+            ps.setInt(9, j.getIdJugador());            
             
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -88,7 +86,7 @@ public class JugadorData {
   }
 
    public List<Jugador> obtenerJugadores(){
-        Jugador j;
+        Jugador j = new Jugador();
         ArrayList<Jugador> jugadores=new ArrayList<>();        
         String sql="SELECT * FROM jugador";
         
@@ -97,7 +95,7 @@ public class JugadorData {
             ResultSet rs= ps.executeQuery();
         
             while(rs.next()){
-                j = new Jugador();
+                
                 j.setDni(rs.getInt("dni"));
                 j.setActivo(rs.getBoolean("activo"));
                 j.setNombreApellido(rs.getString("nombreApellido"));
@@ -119,7 +117,7 @@ public class JugadorData {
     }
    
    public Jugador buscarJugador(int idJugador){
-        Jugador j = null;
+        Jugador j = new Jugador();
         String sql = "SELECT * FROM jugador WHERE id_jugador = ? ";
 
       PreparedStatement ps;
@@ -129,7 +127,7 @@ public class JugadorData {
               ResultSet rs = ps.executeQuery();
 
               while(rs.next()){
-                  j = new Jugador();
+                  
                   j.setDni(rs.getInt("dni"));
                   j.setActivo(rs.getBoolean("activo"));
                   j.setNombreApellido(rs.getString("nombreApellido"));

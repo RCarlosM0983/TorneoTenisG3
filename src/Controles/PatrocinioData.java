@@ -22,7 +22,7 @@ public class PatrocinioData {
     
     public void guardarPatrocinio(Patrocinio patrocinio) {
      
-            String sql = "INSERT INTO patrocinio (id_patrocinio, id_sponsor, id_jugador, fechInicioContrato, fechFinContrato, activo) VALUES (?,?,?,?,?,?))";
+            String sql = "INSERT INTO patrocinio (id_patrocinio, id_sponsor, id_jugador, fechaInicioContrato, fechaFinContrato, activo) VALUES (?,?,?,?,?,?))";
             try {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 
@@ -40,10 +40,11 @@ public class PatrocinioData {
             System.out.println("Error al guardar Sponsor "+ex);
         }}
     
-    public void modificadarPatrocicio (Patrocinio patrocinio) {
-        String sql = "UPDATE patrocinio SET `idPatrocinio`=?,`idPatrociador`=?,`idJugador`=?,`fechIniContrato`=?,`fechFinContrato`=?,`activo`=?,'indumentaria'=? Where `idPatrocinio`=?";
+    public void modificarPatrocinio (Patrocinio patrocinio) {
+        String sql = "UPDATE patrocinio SET id_patrocinio = ?, id_sponsor = ?, id_jugador = ?, fechaInicioContrato = ?, fechaFinContrato = ?, activo = ? , indumentaria = ? Where id_patrocinio = ? ";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
+            
             ps.setInt(1, patrocinio.getIdPatrocinio());
             ps.setInt(2, patrocinio.getIdPatrocinador().getIdSponsor());
             ps.setInt(3, patrocinio.getIdJugador().getIdJugador());
@@ -51,6 +52,7 @@ public class PatrocinioData {
             ps.setDate(5,Date.valueOf(  patrocinio.getFechaFinContrato()));
             ps.setBoolean(6,patrocinio.isActivo());
             //ps.setString(7, patrocinio.getIndumentaria()); 
+            
             ps.executeUpdate();
             ps.close();
                 System.out.println("Patrocinio modificado con exito.");
@@ -63,22 +65,24 @@ public class PatrocinioData {
     
     public Patrocinio buscarPatrocinio (int ID){
         Patrocinio pat = new Patrocinio();
-        Conexion c = new Conexion();
-        SponsorData s=new SponsorData(c);
-        JugadorData j=new JugadorData(c);
+        
+        SponsorData s = new SponsorData(conexion);
+        JugadorData j=new JugadorData(conexion);
+        
         String sql = "SELECT * FROM patrocinio Where id_patrocinio = ? ";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, ID);
             ResultSet rs = ps.executeQuery();
+            
             if(rs.next()) {
-                pat = new Patrocinio();
+                
                 pat.setIdPatrocinio(rs.getInt("id_patrocinio"));
                 
                 Sponsor spon = s.buscarSponsor(rs.getInt("id_sponsor"));
                 pat.setIdPatrocinador(spon);
                 
-                Jugador jug=j.buscarJugador(rs.getInt("id_jugador"));
+                Jugador jug = j.buscarJugador(rs.getInt("id_jugador"));
                 pat.setIdJugador(jug);
                 
                 pat.setFechaInicioContrato(rs.getDate("fechaInicioContrato").toLocalDate());
@@ -140,17 +144,16 @@ public class PatrocinioData {
     
     public List<Patrocinio> buscarTodosPatrocinio(){
           List<Patrocinio> resultados = new ArrayList<>();
-          Conexion c = new Conexion();
-          Patrocinio patrocinio= null;
-          SponsorData s=new SponsorData(c);          
-          JugadorData j=new JugadorData(c);
+          
+          SponsorData s = new SponsorData(conexion);          
+          JugadorData j = new JugadorData(conexion);
           
           String sql = "SELECT * FROM patrocinio ";
           try{
               PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
               ResultSet rs = ps.executeQuery();
               while(rs.next()){
-                  patrocinio = new Patrocinio();
+                  Patrocinio patrocinio = new Patrocinio();
                   patrocinio.setIdPatrocinio(rs.getInt("id_patrocinio"));
                   
                   Sponsor spon = s.buscarSponsor(rs.getInt("id_sponsor"));
