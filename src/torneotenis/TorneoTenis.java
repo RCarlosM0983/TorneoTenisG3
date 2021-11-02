@@ -6,7 +6,9 @@
 package torneotenis;
 
 import Controles.Conexion;
+import Controles.EstadioData;
 import Controles.JugadorData;
+import Modelos.Estadio;
 import Modelos.Jugador;
 import java.time.LocalDate;
 
@@ -23,10 +25,16 @@ public class TorneoTenis {
         // TODO code application logic here
         Conexion c = new Conexion();
         JugadorData jd = new JugadorData(c);
+        EstadioData ed = new EstadioData();
         
+        //Jugador j = new Jugador(26);
+        //Jugador j1 = new Jugador(23);
+        //Jugador j1 = new Jugador(24, "Juan Lopez", 23487624, LocalDate.of(1991, 04, 25), 1.8, 78.5, "Defensivo", "derecho", true);
+        //jd.actualizarJugador(j1);
+        //jd.borrarJugador(j1.getIdJugador());
         
-        Jugador j1 = new Jugador(24, "Juan Lopez", 23487624, LocalDate.of(1991, 04, 25), 1.8, 78.5, "Defensivo", "derecho", true);
-        jd.actualizarJugador(j1);
+        Estadio e1 = new Estadio("aaaaa", "bbb", "cccc", "ddd", 22.5, 32.5, 30000, true);
+        ed.registrarEstadio(e1);
     }
     
 }

@@ -21,6 +21,9 @@ public class Jugador {
     
      public Jugador() {
     }
+     public Jugador(int idJugador){
+         this.idJugador = idJugador;
+     }
 
     public Jugador(String nombreApellido, int dni, LocalDate fechaNac, double altura, double peso, String estilo, String manoHabil, boolean activo) {
         this.nombreApellido = nombreApellido;

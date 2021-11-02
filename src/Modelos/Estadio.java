@@ -8,36 +8,36 @@ public class Estadio {
     private String nombre;
     private String ciudad;
     private String categoria;
-    private boolean activo;
     private String direccionComercial;
-    private String dimension;
+    private float ancho;
+    private float largo;
     private int capacidad;
-    private int estado_enUso;
-
-    public Estadio(String nombre, String ciudad, String categoria, boolean activo, String direccionComercial, String dimension, int capacidad, int estado_enUso) {
-        this.nombre = nombre;
-        this.ciudad = ciudad;
-        this.categoria = categoria;
-        this.activo = activo;
-        this.direccionComercial = direccionComercial;
-        this.dimension = dimension;
-        this.capacidad = capacidad;
-        this.estado_enUso = estado_enUso;
-    }
+    private boolean enUso;
 
     public Estadio() {
     }
 
-    public Estadio(int idEstadio, String nombre, String ciudad, String categoria, boolean activo, String direccionComercial, String dimension, int capacidad, int estado_enUso) {
+    public Estadio(int idEstadio, String nombre, String ciudad, String categoria, String direccionComercial, float ancho, float largo, int capacidad, boolean enUso) {
         this.idEstadio = idEstadio;
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.categoria = categoria;
-        this.activo = activo;
         this.direccionComercial = direccionComercial;
-        this.dimension = dimension;
+        this.ancho = ancho;
+        this.largo = largo;
         this.capacidad = capacidad;
-        this.estado_enUso = estado_enUso;
+        this.enUso = enUso;
+    }
+
+    public Estadio(String nombre, String ciudad, String categoria, String direccionComercial, float ancho, float largo, int capacidad, boolean enUso) {
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+        this.categoria = categoria;
+        this.direccionComercial = direccionComercial;
+        this.ancho = ancho;
+        this.largo = largo;
+        this.capacidad = capacidad;
+        this.enUso = enUso;
     }
 
     public int getIdEstadio() {
@@ -72,14 +72,6 @@ public class Estadio {
         this.categoria = categoria;
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
     public String getDireccionComercial() {
         return direccionComercial;
     }
@@ -88,12 +80,20 @@ public class Estadio {
         this.direccionComercial = direccionComercial;
     }
 
-    public String getDimension() {
-        return dimension;
+    public float getAncho() {
+        return ancho;
     }
 
-    public void setDimension(String dimension) {
-        this.dimension = dimension;
+    public void setAncho(float ancho) {
+        this.ancho = ancho;
+    }
+
+    public float getLargo() {
+        return largo;
+    }
+
+    public void setLargo(float largo) {
+        this.largo = largo;
     }
 
     public int getCapacidad() {
@@ -104,14 +104,12 @@ public class Estadio {
         this.capacidad = capacidad;
     }
 
-    public int getEstado_enUso() {
-        return estado_enUso;
+    public boolean isEnUso() {
+        return enUso;
     }
 
-    public void setEstado_enUso(int estado_enUso) {
-        this.estado_enUso = estado_enUso;
+    public void setEnUso(boolean enUso) {
+        this.enUso = enUso;
     }
-    
-    
 
 }
