@@ -1,6 +1,6 @@
-
 package Modelos;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 
@@ -115,6 +115,11 @@ public class Jugador {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    @Override
+    public String toString() {
+        return idJugador + "," + nombreApellido;
     }
 
    
