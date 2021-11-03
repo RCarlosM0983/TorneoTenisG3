@@ -25,7 +25,7 @@ public class TorneoTenis {
         // TODO code application logic here
         Conexion c = new Conexion();
         JugadorData jd = new JugadorData(c);
-        EstadioData ed = new EstadioData();
+        EstadioData ed = new EstadioData(c);
         
         //Jugador j = new Jugador(26);
         //Jugador j1 = new Jugador(23);
@@ -33,7 +33,7 @@ public class TorneoTenis {
         //jd.actualizarJugador(j1);
         //jd.borrarJugador(j1.getIdJugador());
         
-        Estadio e1 = new Estadio("aaaaa", "bbb", "cccc", "ddd", 22.5, 32.5, 30000, true);
+        Estadio e1 = new Estadio("aaaaa", "bbb", "cccc", "ddd", 22, 32, 30000, true);
         ed.registrarEstadio(e1);
     }
     
