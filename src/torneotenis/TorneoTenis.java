@@ -33,7 +33,7 @@ public class TorneoTenis {
         //jd.actualizarJugador(j1);
         //jd.borrarJugador(j1.getIdJugador());
         
-        Estadio e1 = new Estadio("aaaaa", "bbb", "cccc", "ddd", 22, 32, 30000, true);
+        Estadio e1 = new Estadio("xxx", "zzz", 22, 32, "lll", true, "ddd", 30000, true);
         ed.registrarEstadio(e1);
     }
     

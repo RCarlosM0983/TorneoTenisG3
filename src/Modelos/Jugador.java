@@ -1,7 +1,7 @@
 
+
 package Modelos;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 
@@ -22,6 +22,9 @@ public class Jugador {
     
      public Jugador() {
     }
+     public Jugador(int idJugador){
+         this.idJugador = idJugador;
+     }
 
     public Jugador(String nombreApellido, int dni, LocalDate fechaNac, double altura, double peso, String estilo, String manoHabil, boolean activo) {
         this.nombreApellido = nombreApellido;
@@ -117,10 +120,9 @@ public class Jugador {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-
-    @Override
+ @Override
     public String toString() {
         return idJugador + "," + nombreApellido;
     }
-  
+   
 }
