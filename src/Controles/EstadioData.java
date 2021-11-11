@@ -52,7 +52,7 @@ public class EstadioData {
   public ArrayList<Estadio> obtenerEstadios(){
         Estadio e = new Estadio();
         ArrayList<Estadio> estadios=new ArrayList<>();        
-        String sql="SELECT * FROM jugador";
+        String sql="SELECT * FROM estadio";
         
         try {
             PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -83,7 +83,7 @@ public class EstadioData {
  
   public Estadio buscarEstadio(int idEstadio){
         Estadio e = new Estadio();
-        String sql = "SELECT * FROM jugador WHERE id_estadio = ? ";
+        String sql = "SELECT * FROM estadio WHERE id_estadio = ? ";
 
       PreparedStatement ps;
           try {
@@ -119,7 +119,7 @@ public class EstadioData {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idEstadio);
         
-         ResultSet rs =ps.executeQuery();
+        ps.executeUpdate();
         
       if(ps.executeUpdate()>0){
         JOptionPane.showMessageDialog(null, "Estadio borrado");

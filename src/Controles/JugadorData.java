@@ -84,7 +84,7 @@ public class JugadorData {
         }
   }
 
-   public List<Jugador> obtenerJugadores(){
+   public ArrayList<Jugador> obtenerJugadores(){
         Jugador j = new Jugador();
         ArrayList<Jugador> jugadores=new ArrayList<>();        
         String sql="SELECT * FROM jugador";
@@ -99,7 +99,7 @@ public class JugadorData {
                 j.setActivo(rs.getBoolean("activo"));
                 j.setNombreApellido(rs.getString("nombreApellido"));
                 j.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-                j.setIdJugador(rs.getInt("id_jugador"));
+                j.setIdJugador(rs.getInt("idJugador"));
                 j.setPeso(rs.getFloat("peso"));
                 j.setAltura(rs.getFloat("altura"));
                 j.setEstilo(rs.getString("estilo"));
@@ -148,13 +148,12 @@ public class JugadorData {
     }
    
    public void borrarJugador(int idJugador){
-      String sql = "UPDATE jugador SET activo = false WHERE id_jugador = ?";
+      String sql = "UPDATE jugador SET activo = false WHERE idJugador = ?";
     
       try {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idJugador);
-        
-         ResultSet rs =ps.executeQuery();
+        ps.executeUpdate();
         
       if(ps.executeUpdate()>0){
         JOptionPane.showMessageDialog(null, "Jugador borrado");
