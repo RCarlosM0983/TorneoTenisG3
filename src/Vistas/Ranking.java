@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 public class Ranking extends javax.swing.JInternalFrame {
-    private MenuPrincipal menu;
+    private MenuPrincipal1 menu;
     private TorneoData torneoData;
     private DefaultTableModel modelo = new DefaultTableModel();
     private ArrayList<Jugador> jugadores;
 
-    public Ranking(MenuPrincipal menu, TorneoData torneoData) {
+    public Ranking(MenuPrincipal1 menu, TorneoData torneoData) {
         initComponents();
         
         this.menu = menu;

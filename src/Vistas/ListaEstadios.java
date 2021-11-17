@@ -10,9 +10,9 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
     private ArrayList<Estadio> estadios;
     private ArrayList<Estadio> estadiosActivas;
     private EstadioData estadioData;
-    private MenuPrincipal menu;
+    private MenuPrincipal1 menu;
 
-    public ListaEstadios(MenuPrincipal menu, EstadioData EstadioData) {
+    public ListaEstadios(MenuPrincipal1 menu, EstadioData EstadioData) {
         initComponents();
         
         this.menu = menu;

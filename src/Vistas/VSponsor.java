@@ -7,10 +7,10 @@ import javax.swing.JOptionPane;
 
 public class VSponsor extends javax.swing.JInternalFrame {
     private SponsorData sd;
-    private MenuPrincipal menu;
+    private MenuPrincipal1 menu;
 
     
-    public VSponsor(MenuPrincipal menu, SponsorData sd) {
+    public VSponsor(MenuPrincipal1 menu, SponsorData sd) {
         initComponents();
         this.sd = sd;
         this.menu = menu;

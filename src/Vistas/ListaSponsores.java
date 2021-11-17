@@ -10,12 +10,12 @@ public class ListaSponsores extends javax.swing.JInternalFrame {
     private ArrayList<Sponsor> sponsores;
     private ArrayList<Sponsor> sponsoresActivos;
     private SponsorData sponsorData;
-    private MenuPrincipal menu;
+    private MenuPrincipal1 menu;
 
     /**
      * Creates new form VistaVerPatrocinadores
      */
-    public ListaSponsores(MenuPrincipal menu, SponsorData sd) {
+    public ListaSponsores(MenuPrincipal1 menu, SponsorData sd) {
         initComponents();
         
         this.menu = menu;

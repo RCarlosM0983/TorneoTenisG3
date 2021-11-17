@@ -23,7 +23,7 @@ public class VEncuentro extends javax.swing.JInternalFrame {
         cargarCbo();
         tfResultado.setVisible(false);
         cboJugadorGanador.setVisible(false);
-         jLabel4.setVisible(false);
+        jLabel4.setVisible(false);
         jLabel5.setVisible(false); 
     }
 

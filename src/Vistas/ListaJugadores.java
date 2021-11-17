@@ -1,5 +1,6 @@
 package Vistas;
 
+import Controles.Conexion;
 import Controles.JugadorData;
 import Modelos.Jugador;
 import java.util.ArrayList;
@@ -10,9 +11,10 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
     private ArrayList<Jugador> jugadores;
     private ArrayList<Jugador> jugadoresActivos;
     private JugadorData jugadorData;
-    private MenuPrincipal menu;    
+    private MenuPrincipal1 menu; 
+    private Conexion conexion;
 
-    public ListaJugadores(MenuPrincipal menu, JugadorData jugadorData) {
+    public ListaJugadores(MenuPrincipal1 menu, JugadorData jugadorData) {
         initComponents();
         
         this.jugadorData = jugadorData;
@@ -27,7 +29,8 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
     }
 
     ListaJugadores() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initComponents();    
+        //terminar de completar *******---*****----
     }
 
 
@@ -155,7 +158,7 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
         // TODO add your handling code here:
         
-        //menu.MenuPrincipal;
+        //menu.MenuPrincipal1;
     }//GEN-LAST:event_jbVolverActionPerformed
 
     private void armarCabecera() {

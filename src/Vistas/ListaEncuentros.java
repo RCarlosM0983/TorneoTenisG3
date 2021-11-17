@@ -10,9 +10,9 @@ public class ListaEncuentros extends javax.swing.JInternalFrame {
     private ArrayList<Estadio> estadios;
     private ArrayList<Estadio> estadiosActivas;
     private EstadioData estadioData;
-    private MenuPrincipal menu;
+    private MenuPrincipal1 menu;
 
-    public ListaEncuentros(MenuPrincipal menu, EstadioData EstadioData) {
+    public ListaEncuentros(MenuPrincipal1 menu, EstadioData EstadioData) {
         initComponents();
         
         this.menu = menu;
