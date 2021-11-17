@@ -3,6 +3,7 @@ package Controles;
 import Modelos.Estadio;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 
@@ -81,14 +82,14 @@ public class EstadioData {
         return estadios;
     }
  
-  public Estadio buscarEstadio(int idEstadio){
+  public Estadio buscarEstadio(String nombreEstadio){
         Estadio e = new Estadio();
         String sql = "SELECT * FROM estadio WHERE id_estadio = ? ";
 
       PreparedStatement ps;
           try {
               ps = con.prepareStatement(sql);
-              ps.setInt(1, idEstadio);
+            ps.setString(1, nombreEstadio);
               ResultSet rs = ps.executeQuery();
 
               while(rs.next()){
@@ -105,13 +106,12 @@ public class EstadioData {
 
               }
               ps.close();
-
           } catch (SQLException ex) {
-              JOptionPane.showMessageDialog(null, "Error");
+              JOptionPane.showMessageDialog(null, "Error al buscar nombre de Estadio");
           }
-
       return e;
     }
+  
   public void borrarEstadio(int idEstadio){
       String sql = "UPDATE estadio SET activo = false WHERE id_estadio = ?";
     
@@ -160,4 +160,36 @@ public class EstadioData {
             JOptionPane.showMessageDialog(null, "Error al actualizar Estadio");
         }
   }
+  
+  public ArrayList<Estadio> obtenerEstadiosEnUso(){
+        Estadio e = new Estadio();
+        ArrayList<Estadio> estadios=new ArrayList<>();        
+        String sql="SELECT * FROM estadio WHERE enUso=true";
+        
+        try {
+            PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs= ps.executeQuery();
+        
+            while(rs.next()){
+                e.setIdEstadio(rs.getInt("id_estadio"));
+                e.setNombre(rs.getString("nombre"));
+                e.setCiudad(rs.getString("ciudad"));
+                e.setAncho(rs.getDouble("ancho"));
+                e.setLargo(rs.getDouble("largo"));
+                e.setCategoria(rs.getString("categoria"));
+                e.setEnUso(rs.getBoolean("habilitado"));
+                e.setDireccionComercial(rs.getString("direccion"));
+                e.setCapacidad(rs.getInt("capacidad"));
+                e.setActivo(rs.getBoolean("activo"));
+                
+                estadios.add(e);
+            }
+            
+            ps.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al buscar Estadios en uso.");
+        }
+        return estadios;
+    }
 }

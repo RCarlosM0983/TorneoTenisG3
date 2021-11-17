@@ -57,7 +57,7 @@ public class SponsorData {
         return spon;
 } 
 
-    public void modificadarSponsor (Sponsor s) {
+    public void modificarSponsor (Sponsor s) {
         String sql = "UPDATE sponsor SET marca = ? , activo = ? Where id_sponsor = ? ";
         try{
             PreparedStatement ps = con.prepareStatement(sql);
@@ -129,7 +129,7 @@ public class SponsorData {
                  System.out.println("Error al borrar "+ex);
             }
     }
-
+/*
     public List<Sponsor> buscarTodosSponsor(){
 
         List<Sponsor> resultados = new ArrayList<>();
@@ -153,7 +153,70 @@ public class SponsorData {
             }
         return resultados; 
     }
+    */
+    public List<Sponsor> obtenerSponsores(){
+
+        List<Sponsor> resultados = new ArrayList<>();
+
+        String sql = "SELECT * FROM sponsor";
+
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+                 Sponsor sponsor = new Sponsor();
+                 sponsor.setIdSponsor(rs.getInt("id_sponsor"));
+                 sponsor.setMarca(rs.getString("marca"));
+                 sponsor.setActivo(rs.getBoolean("activo"));
+                 resultados.add(sponsor);
+            }
+            ps.close();
+            }
+        catch(SQLException ex){
+                System.out.println("No se encontraron resultados: "+ ex);
+            }
+        return resultados; 
+    }
     
+       public List<Sponsor> obtenerSponsoresActivos(){
+
+        List<Sponsor> resultados = new ArrayList<>();
+
+        String sql = "SELECT * FROM sponsor WHERE activo=true";
+
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+                 Sponsor sponsor = new Sponsor();
+                 sponsor.setIdSponsor(rs.getInt("id_sponsor"));
+                 sponsor.setMarca(rs.getString("marca"));
+                 sponsor.setActivo(rs.getBoolean("activo"));
+                 resultados.add(sponsor);
+            }
+            ps.close();
+            }
+        catch(SQLException ex){
+                System.out.println("No se encontraron resultados: "+ ex);
+            }
+        return resultados; 
+    }
+       
+           public boolean sponsorExiste(int id){
+        boolean ret = false;
+        String sql = "SELECT * FROM sponsor WHERE id_sponsor =?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                ret = true;
+            }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al buscar el sponsor en la base de datos");
+        }
+        return ret;
+    }
 }
 
 

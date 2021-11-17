@@ -4,6 +4,7 @@ package Controles;
 import Modelos.Torneo;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 
@@ -43,12 +44,14 @@ public class TorneoData {
             JOptionPane.showMessageDialog(null, "No se pudo registrar el Torneo "+ex);
         }
   }
-   
+      public ArrayList<Torneo> obtenerTodosLosTorneos() {
+        return obtenerTorneos("");
+    }
 
-  public ArrayList<Torneo> obtenerTorneos(){
+  public ArrayList<Torneo> obtenerTorneos(String cadena){
         Torneo t = new Torneo();
         ArrayList<Torneo> torneos=new ArrayList<>();        
-        String sql="SELECT * FROM torneos";
+        String sql="SELECT * FROM torneos WHERE Nombre like '%" + cadena + "%';";
         
         try {
             PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
