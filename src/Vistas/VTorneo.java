@@ -3,18 +3,21 @@ package Vistas;
 import Controles.TorneoData;
 import Controles.Conexion;
 import Modelos.Torneo;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
+import javax.swing.JOptionPane;
 
 public class VTorneo extends javax.swing.JInternalFrame {
 
+    private TorneoData torneoData;
+    private Conexion conn;
+    
     public VTorneo() {
         initComponents();
-        cargarCbo();
+        conn = new Conexion();
+        torneoData = new TorneoData(conn);
     }
 
     @SuppressWarnings("unchecked")
@@ -22,29 +25,31 @@ public class VTorneo extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        BtnCargar = new javax.swing.JButton();
+        BtnModificar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        cbActivo = new javax.swing.JCheckBox();
+        jcbActivo = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
-        tfNombre = new javax.swing.JTextField();
-        cboorneo = new javax.swing.JComboBox<>();
+        jtfNombre = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         jdInicio = new com.toedter.calendar.JDateChooser();
         jdFin = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JButton();
+        JbEliminar = new javax.swing.JButton();
+        jtId = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Modificar Torneo");
 
         jLabel2.setText("Fecha de Inicio");
 
-        BtnCargar.setText("Modificar");
-        BtnCargar.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnModificar.setText("Modificar");
+        BtnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnCargarMouseClicked(evt);
+                BtnModificarMouseClicked(evt);
             }
         });
 
@@ -54,12 +59,12 @@ public class VTorneo extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nombre");
 
-        jLabel11.setText("Torneo");
+        jLabel11.setText("Torneo ID:");
 
         btnBuscar.setText("Buscar");
-        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBuscarMouseClicked(evt);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -77,6 +82,22 @@ public class VTorneo extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel8.setText("Torneos");
 
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        JbEliminar.setText("Eliminar");
+        JbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbEliminarActionPerformed(evt);
+            }
+        });
+
+        jtId.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,53 +110,61 @@ public class VTorneo extends javax.swing.JInternalFrame {
                         .addComponent(jLabel8)
                         .addGap(127, 127, 127))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BtnCargar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnLimpiar))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(cboorneo, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(27, 27, 27)
-                                    .addComponent(jLabel1)
+                                    .addComponent(jdInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGap(16, 16, 16)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel10)
+                                            .addGap(44, 44, 44)
+                                            .addComponent(jcbActivo))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jdFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(27, 27, 27)
+                                            .addComponent(jLabel1))
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
                                     .addGap(18, 18, 18)
-                                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnBuscar))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jdInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel10)
-                                                .addGap(44, 44, 44)
-                                                .addComponent(cbActivo))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jdFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnBuscar))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jtId, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(19, 19, 19))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(btnGuardar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(BtnModificar)
+                                    .addGap(30, 30, 30)
+                                    .addComponent(btnLimpiar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(JbEliminar))))
+                        .addContainerGap(19, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboorneo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
+                    .addComponent(jLabel11)
+                    .addComponent(jtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,87 +177,124 @@ public class VTorneo extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(cbActivo))
+                    .addComponent(jcbActivo))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnCargar)
-                    .addComponent(btnLimpiar))
+                    .addComponent(BtnModificar)
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnGuardar)
+                    .addComponent(JbEliminar))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLimpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseClicked
-       
-        tfNombre.setText("");
-        cbActivo.setSelected(false);
-        cboorneo.setSelectedIndex(0);
+    private boolean vacio(){
+        if(jdInicio.getDate() == null || jdFin.getDate() == null ||jtfNombre.getText().isEmpty()){      
+            return true;      
+        }else{
+            return false;
+        }
+    }
+    
+    private void limpiar(){
+        jtfNombre.setText("");
+        jcbActivo.setSelected(false);
         jdInicio.setDate(null);
         jdFin.setDate(null);
-
+        jtId.setText(""); 
+    }
+    
+    private void btnLimpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseClicked
+       this.limpiar();
     }//GEN-LAST:event_btnLimpiarMouseClicked
-public void cargarCbo(){
-        try {
-            Conexion con = new Conexion();
-            TorneoData orneo=new TorneoData(con);
-            
-            List<Torneo> tor= orneo.devolverTodosTorneos();
-            for (int i = 0; i < tor.size(); i++) {
-                cboorneo.addItem(tor.get(i)); 
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(frmiModificarSponsor.class.getName()).log(Level.SEVERE, null, ex);
-        }
- }
-    private void BtnCargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCargarMouseClicked
-        try {
-           Conexion con = new Conexion();
-            Torneo j=new Torneo();
-            TorneoData jd=new TorneoData(con);
-            j=(Torneo)cboorneo.getSelectedItem();
-            j.setNombre(tfNombre.getText());
-            Date fecini=(Date) jdInicio.getDate();
-            LocalDate ld=fecini.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            j.setFechaNacInicio(ld);
-            Date fecFin=(Date) jdFin.getDate();
-            LocalDate ld1=fecFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            j.setFehcaNacFinal(ld1);
-            j.setActivo(cbActivo.isSelected());
-            jd.modificadarTorneo(j);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(frmiAgregarSponsor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        cboorneo.removeAllItems();
-        cargarCbo();
-    }//GEN-LAST:event_BtnCargarMouseClicked
 
-    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        Torneo j= new Torneo();
-        j= (Torneo) cboorneo.getSelectedItem();
-        tfNombre.setText(j.getNombre());
-        Date fecFin=java.sql.Date.valueOf(j.getFechaNacInicio());
-        jdInicio.setDate(fecFin);
-        Date fecFin1=java.sql.Date.valueOf(j.getFehcaNacFinal());
-        jdFin.setDate(fecFin1);
-       cbActivo.setSelected(j.isActivo());
-    }//GEN-LAST:event_btnBuscarMouseClicked
+    private void BtnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnModificarMouseClicked
+        
+         if(vacio()){
+            JOptionPane.showMessageDialog(this, "Debe completar los campos");
+        }else{  
+             
+                String nombre = jtfNombre.getText();
+                LocalDate fecha_ini = jdInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate fecha_fin = jdFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                boolean activo = jcbActivo.isSelected();
+
+
+                 int id_torneo=Integer.parseInt(jtId.getText());
+                 
+                Torneo t = new Torneo(id_torneo, nombre, fecha_ini, fecha_fin, activo);
+                torneoData.actualizarTorneo(t);
+
+                this.limpiar();
+         }
+             
+    }//GEN-LAST:event_BtnModificarMouseClicked
+
+    private void JbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbEliminarActionPerformed
+
+        int id_torneo = Integer.parseInt(jtId.getText());
+        torneoData.borrarTorneo(id_torneo);
+
+    }//GEN-LAST:event_JbEliminarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        String nombreTorneo = jtfNombre.getText();
+        Torneo torneo = torneoData.buscarTorneoXnombre(nombreTorneo);
+        
+             
+        if(torneo != null){
+            jtId.setText(torneo.getIdTorneo()+"");
+            jtfNombre.setText(torneo.getNombre()+"");
+            jdInicio.setDate(java.sql.Date.valueOf(torneo.getFechaInicio()));
+            jdFin.setDate(java.sql.Date.valueOf(torneo.getFechaFin()));
+            jcbActivo.setSelected(torneo.isActivo());
+
+        }else{
+            JOptionPane.showMessageDialog(this,"No se encontraron datos");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+                if(vacio()){
+            JOptionPane.showMessageDialog(this, "Debe completar los campos");
+        }else{
+
+            
+           String nombre = jtfNombre.getText();
+            LocalDate fecha_ini = Instant.ofEpochMilli((jdInicio.getDate()).getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fecha_fin = Instant.ofEpochMilli((jdFin.getDate()).getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            boolean activo=jcbActivo.isEnabled();
+            
+           Conexion c = new Conexion();
+           Torneo torneo = new Torneo(nombre, fecha_ini, fecha_fin, activo);
+           torneoData.guardarTorneo(torneo);
+           jtId.setText(torneo.getIdTorneo()+"");
+           
+           this.limpiar();
+         }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnCargar;
+    private javax.swing.JButton BtnModificar;
+    private javax.swing.JButton JbEliminar;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JCheckBox cbActivo;
-    private javax.swing.JComboBox<Torneo> cboorneo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JCheckBox jcbActivo;
     private com.toedter.calendar.JDateChooser jdFin;
     private com.toedter.calendar.JDateChooser jdInicio;
-    private javax.swing.JTextField tfNombre;
+    private javax.swing.JTextField jtId;
+    private javax.swing.JTextField jtfNombre;
     // End of variables declaration//GEN-END:variables
 }

@@ -85,8 +85,9 @@ public class JugadorData {
   }
 
    public ArrayList<Jugador> obtenerJugadores(){
-        Jugador j = new Jugador();
-        ArrayList<Jugador> jugadores=new ArrayList<>();        
+       
+        ArrayList<Jugador> jugadores=new ArrayList<>();  
+        
         String sql="SELECT * FROM jugador";
         
         try {
@@ -94,16 +95,17 @@ public class JugadorData {
             ResultSet rs= ps.executeQuery();
         
             while(rs.next()){
-                
+                Jugador j = new Jugador();
+                j.setIdJugador(rs.getInt("id_jugador"));
                 j.setDni(rs.getInt("dni"));
                 j.setActivo(rs.getBoolean("activo"));
                 j.setNombreApellido(rs.getString("nombreApellido"));
                 j.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-                j.setIdJugador(rs.getInt("id_jugador"));
                 j.setPeso(rs.getFloat("peso"));
                 j.setAltura(rs.getFloat("altura"));
                 j.setEstilo(rs.getString("estilo"));
                 j.setManoHabil(rs.getString("manoHabil"));
+                
                 jugadores.add(j);
             }
             
@@ -156,6 +158,7 @@ public class JugadorData {
             JOptionPane.showMessageDialog(null, "Error al eliminar jugador"+ex);
         }
     }
+   
    public Jugador buscarJugadorPorDni(int dni){
        
         String sql = "SELECT * FROM jugador WHERE dni = ? ";
@@ -185,26 +188,28 @@ public class JugadorData {
 
       return j;
    }
+   
    public ArrayList<Jugador> obtenerJugadoresActivos(){
-        Jugador j = new Jugador();
-        ArrayList<Jugador> jugadores=new ArrayList<>();        
-        String sql="SELECT * FROM jugador WHERE activo=true";
+        
+        ArrayList<Jugador> jugadores = new ArrayList<>();        
+        String sql="SELECT * FROM jugador WHERE activo = 1 ";
         
         try {
             PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs= ps.executeQuery();
         
             while(rs.next()){
-                
+                Jugador j = new Jugador();
+                j.setIdJugador(rs.getInt("id_jugador"));
                 j.setDni(rs.getInt("dni"));
                 j.setActivo(rs.getBoolean("activo"));
                 j.setNombreApellido(rs.getString("nombreApellido"));
-                j.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-                j.setIdJugador(rs.getInt("idJugador"));
+                j.setFechaNac(rs.getDate("fechaNac").toLocalDate());                
                 j.setPeso(rs.getFloat("peso"));
                 j.setAltura(rs.getFloat("altura"));
                 j.setEstilo(rs.getString("estilo"));
                 j.setManoHabil(rs.getString("manoHabil"));
+                
                 jugadores.add(j);
             }
             

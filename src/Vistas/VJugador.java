@@ -263,6 +263,7 @@ public class VJugador extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
     private boolean vacio(){
         if(jdcFechaNac.getDate() == null || jtfAltura.getText().isEmpty() || jtfDni.getText().isEmpty() ||    
            jtfNombreApellido.getText().isEmpty() || jtfPeso.getText().isEmpty()){
@@ -339,7 +340,7 @@ public class VJugador extends javax.swing.JInternalFrame {
        float peso = Float.parseFloat(jtfPeso.getText());
        int dni = Integer.parseInt(jtfDni.getText());
        LocalDate fechaNac = Instant.ofEpochMilli((jdcFechaNac.getDate()).getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-       boolean activo = jcbActivo.isEnabled();
+       boolean activo = jcbActivo.isSelected();
        
        Conexion c = new Conexion();
        JugadorData jd = new JugadorData(c);
@@ -359,9 +360,7 @@ public class VJugador extends javax.swing.JInternalFrame {
        int dni = Integer.parseInt(jtfDni.getText());
        String nombre = jtfNombreApellido.getText();
        LocalDate fechaNac = jdcFechaNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-       //String manoHabil = jtfManoHabil.getText();
        String manoHabil = (jcbManoHabil.getSelectedItem()+"");
-       //String estilo = jtfEstilo.getText();
        String estilo = (jcbEstilo.getSelectedItem()+"");
        float altura = Float.parseFloat(jtfAltura.getText());
        float peso = Float.parseFloat(jtfPeso.getText());

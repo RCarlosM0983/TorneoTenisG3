@@ -23,15 +23,10 @@ import Modelos.Sponsor;
 import Modelos.Patrocinio;
 import Modelos.Torneo;
 
-/**
- *
- * @author FP
- */
+
 public class Patrocinios extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form ABMPatrocinio
-     */
+
     private JugadorData jugadorData;
     private SponsorData sponsorData;
 
@@ -90,17 +85,17 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         }
     }
 
-    private void llenarComboPatrocinadores(Boolean activo) {
+    private void llenarComboSponsores(Boolean activo) {
 
-        listaPatrocinadores = (ArrayList) patrocinadorData.obtenerPatrocinador();
-        int largoLista = listaPatrocinadores.size();
-        Patrocinador[] nombre = new Patrocinador[largoLista];
+        listaSponsores = (ArrayList) sponsorData.obtenerSponsor();
+        int largoLista = listaSponsores.size();
+        Sponsor[] nombre = new Sponsor[largoLista];
 
         int i = 0;
 
-        for (Patrocinador patrocinador : listaPatrocinadores) {
-            if (patrocinador.isActivo() == activo) {
-                cbPatrocinador.addItem(patrocinador);
+        for (Sponsor sponsor : listaSponsores) {
+            if (sponsor.isActivo() == activo) {
+                cbSponsor.addItem(sponsor);
                 i++;
             }
         }
@@ -119,7 +114,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
-        cbPatrocinador = new javax.swing.JComboBox<>();
+        cbSponsor = new javax.swing.JComboBox<>();
         cbIndumentaria = new javax.swing.JComboBox<>();
         cbJugador = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -161,7 +156,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Jugador:");
 
-        jLabel3.setText("Patocinador:");
+        jLabel3.setText("Sponsor:");
 
         jLabel4.setText("Indumentaria:");
 
@@ -232,7 +227,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cbJugador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 5, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
@@ -241,7 +236,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addGap(18, 18, 18)
-                                        .addComponent(cbPatrocinador, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(cbSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(253, 253, 253))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -273,7 +268,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
                     .addComponent(cbJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbPatrocinador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -365,7 +360,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
             
             patrocinio.setIndumentaria(cbIndumentaria.getSelectedItem().toString());
             patrocinio.setJugador((Jugador) cbJugador.getSelectedItem());
-            patrocinio.setPatrocinador((Patrocinador) cbPatrocinador.getSelectedItem());
+            patrocinio.setPatrocinador((Patrocinador) cbSponsor.getSelectedItem());
             patrocinio.setFechaContraroIn(convertToLocalDate(jdcInicioContrato.getDate()));
             patrocinio.setFechaContratoFn(convertToLocalDate(jdcFinContrato.getDate()));
             patrocinio.setActivo(true);
@@ -436,7 +431,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbIndumentaria;
     private javax.swing.JComboBox<Jugador> cbJugador;
-    private javax.swing.JComboBox<Patrocinador> cbPatrocinador;
+    private javax.swing.JComboBox<Sponsor> cbSponsor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

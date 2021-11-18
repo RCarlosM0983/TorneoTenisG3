@@ -3,34 +3,33 @@ package Vistas;
 import Controles.Conexion;
 import Controles.JugadorData;
 import Modelos.Jugador;
+import java.awt.Component;
 import java.util.ArrayList;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 public class ListaJugadores extends javax.swing.JInternalFrame {
-    private DefaultTableModel modelo;
+    private DefaultTableModel modelo = new DefaultTableModel();
     private ArrayList<Jugador> jugadores;
-    private ArrayList<Jugador> jugadoresActivos;
-    private JugadorData jugadorData;
+    private ArrayList<Jugador> jugadoresActivos;    
     private MenuPrincipal1 menu; 
-    private Conexion conexion;
-
-    public ListaJugadores(MenuPrincipal1 menu, JugadorData jugadorData) {
+    private Conexion conexion = new Conexion();
+    private JugadorData jugadorData = new JugadorData(conexion);
+    
+    public ListaJugadores() {
         initComponents();
         
-        this.jugadorData = jugadorData;
+        conexion = new Conexion();
+        jugadorData = new JugadorData(conexion);
+        
         jugadores = (ArrayList<Jugador>) jugadorData.obtenerJugadores();
         jugadoresActivos = (ArrayList<Jugador>) jugadorData.obtenerJugadoresActivos();
-        modelo = new DefaultTableModel();
-        this.menu = menu;
-        
+         
         vaciarTabla();
         armarCabecera();
         llenarTablaTodos();
-    }
-
-    ListaJugadores() {
-        initComponents();    
-        //terminar de completar *******---*****----
     }
 
 
@@ -46,6 +45,10 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
         jCheckBoxActivos = new javax.swing.JCheckBox();
         jbVolver = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Lista Jugadores");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -53,6 +56,7 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jTableJugadores.setAutoCreateRowSorter(true);
         jTableJugadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -157,12 +161,12 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
 
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
         // TODO add your handling code here:
-        
-        //menu.MenuPrincipal1;
+        this.dispose();
+       
     }//GEN-LAST:event_jbVolverActionPerformed
 
     private void armarCabecera() {
-        ArrayList<Object> titulos = new ArrayList<>();
+        ArrayList<Object> titulos = new ArrayList<Object>();
 
         titulos.add("ID");
         titulos.add("Nombre y Apellido");
@@ -182,6 +186,9 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
     }
 
     private void llenarTablaTodos() {
+        
+        vaciarTabla();
+        
         for (Jugador j: jugadores) {
             modelo.addRow(new Object[]{j.getIdJugador(), j.getNombreApellido(), j.getDni(), j.getFechaNac(), j.getAltura(), j.getPeso(), j.getEstilo(), j.getManoHabil(), j.isActivo()});
         }
@@ -191,6 +198,10 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
         for (Jugador j: jugadoresActivos) {
             modelo.addRow(new Object[]{j.getIdJugador(), j.getNombreApellido(), j.getDni(), j.getFechaNac(), j.getAltura(), j.getPeso(), j.getEstilo(), j.getManoHabil(), j.isActivo()});
         }
+     resizeColumnWidth(jTableJugadores);
+    //Se desactiva el Auto Resize de la tabla
+    //Es importante que vaya despues de el metodo que ajusta el ancho de la columna
+    jTableJugadores.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
     
     private void vaciarTabla(){
@@ -199,7 +210,42 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
         for (int i = filas; i >= 0; i--) {
             modelo.removeRow(i);
         }
+           resizeColumnWidth(jTableJugadores);
+    //Se desactiva el Auto Resize de la tabla
+    //Es importante que vaya despues de el metodo que ajusta el ancho de la columna
+    jTableJugadores.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
+    
+    
+    
+    private void resizeColumnWidth(JTable table) {
+        //Se obtiene el modelo de la columna
+        TableColumnModel columnModel = table.getColumnModel();
+        //Se obtiene el total de las columnas
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            //Establecemos un valor minimo para el ancho de la columna
+            int width = 150; //Min Width
+            //Obtenemos el numero de filas de la tabla
+            for (int row = 0; row < table.getRowCount(); row++) {
+                //Obtenemos el renderizador de la tabla
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                //Creamos un objeto para preparar el renderer
+                Component comp = table.prepareRenderer(renderer, row, column);
+                //Establecemos el width segun el valor maximo del ancho de la columna
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+
+            }
+            //Se establece una condicion para no sobrepasar el valor de 300
+            //Esto es Opcional
+            if (width > 100) {
+                width = 100;
+            }
+            //Se establece el ancho de la columna
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBoxActivos;

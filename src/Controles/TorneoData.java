@@ -98,6 +98,32 @@ public class TorneoData {
 
       return t;
     }
+  
+   public Torneo buscarTorneoXnombre(String nombreTorneo) {
+        Torneo t = new Torneo();
+        String sql = "SELECT * FROM torneos WHERE nombre = ? ";
+      
+          try {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+              ps.setString(1, nombreTorneo);
+              ResultSet rs = ps.executeQuery();
+
+              while(rs.next()){
+                t.setIdTorneo(rs.getInt("id_torneo"));  
+                t.setNombre(rs.getString("nombre"));
+                t.setFechaInicio((rs.getDate("fecha_ini")).toLocalDate());
+                t.setFechaFin((rs.getDate("fecha_fin")).toLocalDate());
+                t.setActivo(rs.getBoolean("activo"));
+
+              }
+              ps.close();
+
+          } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null, "Error al buscar Torneo por nombre!");
+          }
+      return t;       
+   }
+  
   public void borrarTorneo(int idTorneo){
       String sql = "UPDATE torneos SET activo = false WHERE id_torneo = ?";
     
@@ -140,4 +166,28 @@ public class TorneoData {
             JOptionPane.showMessageDialog(null, "Error al actualizar Torneo");
         }
   }
+  
+     public void guardarTorneo(Torneo t) {
+       String query = "INSERT INTO torneos (nombre, fecha_ini, fecha_fin, activo) VALUES (?,?,?,?)";
+
+        try{
+            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, t.getNombre());
+                ps.setDate(2, Date.valueOf(t.getFechaInicio()));
+                ps.setDate(3, Date.valueOf(t.getFechaFin()));
+                ps.setBoolean(4, t.isActivo());
+
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+
+                if(rs.next()){
+                    t.setIdTorneo(rs.getInt(1));
+                    JOptionPane.showMessageDialog(null, "Torneo Registrado Correctamente");
+                }
+                ps.close();
+        } catch (SQLException ex){
+                JOptionPane.showMessageDialog(null, "ERROR Torneo No Registrado");
+          }
+       
+   }
 }

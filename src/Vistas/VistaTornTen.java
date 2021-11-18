@@ -16,6 +16,8 @@ public class VistaTornTen extends javax.swing.JFrame {
      */
     public VistaTornTen() {
         initComponents();
+        this.setExtendedState(MAXIMIZED_BOTH);
+        
     }
 
     /**
@@ -31,12 +33,17 @@ public class VistaTornTen extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jmiJugador = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jmiEstadio = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jmTorneo1 = new javax.swing.JMenu();
+        jmAltaBajaTorneo1 = new javax.swing.JMenu();
+        jmConsultaTorneo1 = new javax.swing.JMenu();
+        jmRanking1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,7 +51,7 @@ public class VistaTornTen extends javax.swing.JFrame {
         jdpEscritorio.setLayout(jdpEscritorioLayout);
         jdpEscritorioLayout.setHorizontalGroup(
             jdpEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGap(0, 719, Short.MAX_VALUE)
         );
         jdpEscritorioLayout.setVerticalGroup(
             jdpEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -61,6 +68,14 @@ public class VistaTornTen extends javax.swing.JFrame {
         });
         jMenu1.add(jmiJugador);
 
+        jMenuItem3.setText("jMenuItem3");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
         jMenuBar1.add(jMenu1);
 
         jmiEstadio.setText("Estadio");
@@ -75,9 +90,6 @@ public class VistaTornTen extends javax.swing.JFrame {
 
         jMenuBar1.add(jmiEstadio);
 
-        jMenu2.setText("jMenu2");
-        jMenuBar1.add(jMenu2);
-
         jMenu3.setText("jMenu3");
         jMenuBar1.add(jMenu3);
 
@@ -85,7 +97,39 @@ public class VistaTornTen extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("jMenu5");
+
+        jMenuItem2.setText("jMenuItem2");
+        jMenu5.add(jMenuItem2);
+
         jMenuBar1.add(jMenu5);
+
+        jmTorneo1.setText("Torneo");
+
+        jmAltaBajaTorneo1.setText("Alta/Baja");
+        jmAltaBajaTorneo1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmAltaBajaTorneo1MouseClicked(evt);
+            }
+        });
+        jmAltaBajaTorneo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmAltaBajaTorneo1ActionPerformed(evt);
+            }
+        });
+        jmTorneo1.add(jmAltaBajaTorneo1);
+
+        jmConsultaTorneo1.setText("Consulta");
+        jmConsultaTorneo1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmConsultaTorneo1MouseClicked(evt);
+            }
+        });
+        jmTorneo1.add(jmConsultaTorneo1);
+
+        jmRanking1.setText("Ranking");
+        jmTorneo1.add(jmRanking1);
+
+        jMenuBar1.add(jmTorneo1);
 
         setJMenuBar(jMenuBar1);
 
@@ -93,9 +137,9 @@ public class VistaTornTen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jdpEscritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jdpEscritorio)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,6 +168,37 @@ public class VistaTornTen extends javax.swing.JFrame {
         vj.setVisible(true);
         jdpEscritorio.add(vj);
     }//GEN-LAST:event_jmiJugadorActionPerformed
+
+    private void jmAltaBajaTorneo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmAltaBajaTorneo1MouseClicked
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        VTorneo aC=new VTorneo();
+        aC.setVisible(true);
+        jdpEscritorio.add(aC);
+        jdpEscritorio.moveToFront(aC);
+    }//GEN-LAST:event_jmAltaBajaTorneo1MouseClicked
+
+    private void jmAltaBajaTorneo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAltaBajaTorneo1ActionPerformed
+
+    }//GEN-LAST:event_jmAltaBajaTorneo1ActionPerformed
+
+    private void jmConsultaTorneo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmConsultaTorneo1MouseClicked
+     /*   jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        ListaTorneos aC=new ListaTorneos();
+        aC.setVisible(true);
+        jdpEscritorio.add(aC);
+        jdpEscritorio.moveToFront(aC);*/
+    }//GEN-LAST:event_jmConsultaTorneo1MouseClicked
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        ListaJugadores aC=new ListaJugadores();
+        aC.setVisible(true);
+        jdpEscritorio.add(aC);
+        jdpEscritorio.moveToFront(aC);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,13 +237,18 @@ public class VistaTornTen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JDesktopPane jdpEscritorio;
+    private javax.swing.JMenu jmAltaBajaTorneo1;
+    private javax.swing.JMenu jmConsultaTorneo1;
+    private javax.swing.JMenu jmRanking1;
+    private javax.swing.JMenu jmTorneo1;
     private javax.swing.JMenu jmiEstadio;
     private javax.swing.JMenuItem jmiJugador;
     // End of variables declaration//GEN-END:variables
