@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 public class TorneoData {
     
-     private Connection con = null;
+  private Connection con = null;
 
   public TorneoData() {
     }
@@ -19,6 +19,7 @@ public class TorneoData {
   public TorneoData(Conexion conn){ 
       con = conn.conectar();
     }
+  
   public void registrarTorneo(Torneo t){
     String sql = "INSERT INTO torneos(nombre, fecha_ini, fecha_fin, activo) VALUES (?, ?, ?, ?)";
     
@@ -42,11 +43,10 @@ public class TorneoData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo registrar el Torneo "+ex);
         }
-  }
-   
+  }   
 
   public ArrayList<Torneo> obtenerTorneos(){
-        Torneo t = new Torneo();
+        
         ArrayList<Torneo> torneos=new ArrayList<>();        
         String sql="SELECT * FROM torneos";
         
@@ -55,6 +55,7 @@ public class TorneoData {
             ResultSet rs= ps.executeQuery();
         
             while(rs.next()){
+                Torneo t = new Torneo();
                 t.setIdTorneo(rs.getInt("id_torneo"));
                 t.setNombre(rs.getString("nombre"));
                 t.setFechaInicio(rs.getDate("fecha_ini").toLocalDate());
@@ -140,6 +141,7 @@ public class TorneoData {
             JOptionPane.showMessageDialog(null, "Error al eliminar Torneo "+ex);
         }   
     }
+  
   public void actualizarTorneo(Torneo t){
         try {
             String sql = "UPDATE torneos SET nombre = ?, fecha_ini = ?, fecha_fin = ?, activo = ? WHERE id_torneo = ? ";
@@ -190,4 +192,32 @@ public class TorneoData {
           }
        
    }
+     
+     public ArrayList<Torneo> obtenerTorneosActivos(){
+        
+        ArrayList<Torneo> torneos=new ArrayList<>();        
+        String sql="SELECT * FROM torneos WHERE activo = 1 ";
+        
+        try {
+            PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs= ps.executeQuery();
+        
+            while(rs.next()){
+                Torneo t = new Torneo();
+                t.setIdTorneo(rs.getInt("id_torneo"));
+                t.setNombre(rs.getString("nombre"));
+                t.setFechaInicio(rs.getDate("fecha_ini").toLocalDate());
+                t.setFechaFin(rs.getDate("fecha_fin").toLocalDate());
+                t.setActivo(rs.getBoolean("activo"));
+                
+                torneos.add(t);
+            }
+            
+            ps.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error de conexion al traer Torneos Activos.");
+        }
+        return torneos;
+    }
 }

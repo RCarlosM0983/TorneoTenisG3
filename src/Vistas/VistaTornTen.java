@@ -183,12 +183,12 @@ public class VistaTornTen extends javax.swing.JFrame {
     }//GEN-LAST:event_jmAltaBajaTorneo1ActionPerformed
 
     private void jmConsultaTorneo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmConsultaTorneo1MouseClicked
-     /*   jdpEscritorio.removeAll();
+        jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         ListaTorneos aC=new ListaTorneos();
         aC.setVisible(true);
         jdpEscritorio.add(aC);
-        jdpEscritorio.moveToFront(aC);*/
+        jdpEscritorio.moveToFront(aC);
     }//GEN-LAST:event_jmConsultaTorneo1MouseClicked
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
