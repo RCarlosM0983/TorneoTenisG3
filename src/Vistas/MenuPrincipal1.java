@@ -5,7 +5,7 @@ public class MenuPrincipal1 extends javax.swing.JFrame {
     public MenuPrincipal1() {
         initComponents();
     }
-
+//prueba
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
