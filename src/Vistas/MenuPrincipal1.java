@@ -207,7 +207,7 @@ public class MenuPrincipal1 extends javax.swing.JFrame {
     private void jmConsultaTorneoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmConsultaTorneoMouseClicked
         Menu.removeAll();
         Menu.repaint();
-        ListaTorneos1 aC=new ListaTorneos1();
+        ListaTorneos aC=new ListaTorneos();
         aC.setVisible(true);
         Menu.add(aC);
         Menu.moveToFront(aC);

@@ -26,6 +26,10 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
         armarCabecera();
         llenarTablaTodos();
     }
+
+    ListaEstadios() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

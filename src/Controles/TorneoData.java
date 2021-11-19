@@ -4,6 +4,7 @@ package Controles;
 import Modelos.Torneo;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 
@@ -239,4 +240,7 @@ public class TorneoData {
         }
         return torneos;
     }
+
+
+  
 }

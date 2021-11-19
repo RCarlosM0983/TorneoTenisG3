@@ -17,7 +17,7 @@ public class Ranking extends javax.swing.JInternalFrame {
         
         this.menu = menu;
         this.torneoData = torneoData;
-        jugadores = (ArrayList<Jugador>) torneoData.obtenerRanking((Torneo) jComboBoxCopa.getSelectedItem());
+       // jugadores = (ArrayList<Jugador>) torneoData.obtenerRanking((Torneo) jComboBoxCopa.getSelectedItem());
         
         vaciarTabla();
         armarCabecera();
