@@ -1,45 +1,48 @@
 package Vistas;
 
-import Controles.EstadioData;
+import Controles.Conexion;
 import Controles.JugadorData;
 import Controles.SponsorData;
 import Controles.PatrocinioData;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import Modelos.Estadio;
 import Modelos.Jugador;
-import Modelos.Encuentro;
 import Modelos.Sponsor;
 import Modelos.Patrocinio;
-import Modelos.Torneo;
 
 
 public class Patrocinios extends javax.swing.JInternalFrame {
 
-
+    private DefaultTableModel modelo;
     private JugadorData jugadorData;
     private SponsorData sponsorData;
 
     private ArrayList<Jugador> listaJugadores = new ArrayList<>();
     private ArrayList<Sponsor> listaSponsores = new ArrayList<>();
-
-    public Patrocinios() {
-        initComponents();
-
-    }
     PatrocinioData patrocinioData;
     ArrayList<Patrocinio> listaPatrocinio = new ArrayList<>();
     Patrocinio patrocinio;
+    
+    public Patrocinios() {
+        initComponents();
+        modelo = new DefaultTableModel();
+        armarCabecera();
+    }
+    private void armarCabecera(){
+        ArrayList<Object>columnas = new ArrayList<>();
+        columnas.add("Sponsor");
+        columnas.add("Indumentaria");
+        columnas.add("Jugador");
+        
+        for(Object titulo: columnas){
+            modelo.addColumn(titulo);
+        }
+        jtblPatrocinios.setModel(modelo);
+    }
 
     public Patrocinios(PatrocinioData patrocinioData, JugadorData jugadorData, SponsorData sponsorData) {
         initComponents();
@@ -47,15 +50,10 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         this.jugadorData = jugadorData;
         this.sponsorData = sponsorData;
         
-        rbActivos.setSelected(true);
-        llenarComboJugadores(true);
-        llenarComboSponsores(true);
-        llenarTablaPatrocinios();
-
     }
-
+/*
     private void llenarTablaPatrocinios() {
-        DefaultTableModel model = (DefaultTableModel) tblPatrocinio.getModel();
+        DefaultTableModel model = (DefaultTableModel) jtblPatrocinios.getModel();
         model.setRowCount(0);
 
         List<Patrocinio> listaPatrocinios = patrocinioData.obtenerPatrocinioJugador((Jugador) cbJugador.getSelectedItem());
@@ -67,39 +65,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
             }
 
         }
-    }
-
-    private void llenarComboJugadores(Boolean activo) {
-
-        listaJugadores = (ArrayList) jugadorData.obtenerJugadores();
-        int largoLista = listaJugadores.size();
-        Jugador[] nombre = new Jugador[largoLista];
-
-        int i = 0;
-
-        for (Jugador jugador : listaJugadores) {
-            if (jugador.isActivo() == activo) {
-                cbJugador.addItem(jugador);
-                i++;
-            }
-        }
-    }
-
-    private void llenarComboSponsores(Boolean activo) {
-
-        listaSponsores = (ArrayList) sponsorData.obtenerSponsor();
-        int largoLista = listaSponsores.size();
-        Sponsor[] nombre = new Sponsor[largoLista];
-
-        int i = 0;
-
-        for (Sponsor sponsor : listaSponsores) {
-            if (sponsor.isActivo() == activo) {
-                cbSponsor.addItem(sponsor);
-                i++;
-            }
-        }
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,19 +80,19 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
-        cbSponsor = new javax.swing.JComboBox<>();
         cbIndumentaria = new javax.swing.JComboBox<>();
-        cbJugador = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblPatrocinio = new javax.swing.JTable();
-        btnRegistrar = new javax.swing.JButton();
-        rbActivos = new javax.swing.JRadioButton();
-        rbInactivos = new javax.swing.JRadioButton();
+        jbRegistrar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jtfDni = new javax.swing.JTextField();
+        jtfJugador = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtblPatrocinios = new javax.swing.JTable();
+        jcbSponsor = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,23 +107,23 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Patrocinios");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setText("Gestion de Patrocinios");
 
-        cbIndumentaria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Raqueta", "Remera", "Zapatilla", "Reloj" }));
+        cbIndumentaria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        cbJugador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbJugadorActionPerformed(evt);
-            }
-        });
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("DNI Jugador");
 
-        jLabel1.setText("Jugador:");
-
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Sponsor:");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Indumentaria:");
 
         btnSalir.setText("Salir");
@@ -167,49 +133,45 @@ public class Patrocinios extends javax.swing.JInternalFrame {
             }
         });
 
-        tblPatrocinio.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Patrocinador", "Indumentaria", "Jugador", "Inicio", "Fin"
-            }
-        ));
-        tblPatrocinio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblPatrocinioMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tblPatrocinio);
-
-        btnRegistrar.setText("Registrar");
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        jbRegistrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jbRegistrar.setText("Registrar");
+        jbRegistrar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rbActivos);
-        rbActivos.setText("Activos");
-        rbActivos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbActivosActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(rbInactivos);
-        rbInactivos.setText("Inactivos");
-        rbInactivos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbInactivosActionPerformed(evt);
+                jbRegistrarActionPerformed(evt);
             }
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel7.setText("Patrocinis por Jugador:");
+        jLabel7.setText("Patrocinios por Jugador:");
+
+        jtfJugador.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtfJugador.setText(" ");
+        jtfJugador.setEnabled(false);
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Buscar");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jtblPatrocinios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jtblPatrocinios);
+
+        jcbSponsor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,75 +180,72 @@ public class Patrocinios extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(34, 34, 34)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbJugador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cbIndumentaria, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cbSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(253, 253, 253))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(rbActivos)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbInactivos))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbIndumentaria, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addComponent(jbRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtfJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jcbSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(219, 219, 219)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(142, 142, 142)
-                                .addComponent(btnRegistrar)
-                                .addGap(35, 35, 35)
-                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(95, 95, 95)
-                                .addComponent(jLabel2)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(48, 48, 48))
+                                .addComponent(jLabel2))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 18, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(28, 28, 28)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cbJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(cbIndumentaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(jLabel7)
+                    .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jtfJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbActivos)
-                    .addComponent(rbInactivos))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalir)
-                    .addComponent(btnRegistrar))
-                .addGap(25, 25, 25))
+                    .addComponent(jLabel3)
+                    .addComponent(jcbSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addComponent(btnSalir)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbIndumentaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbRegistrar))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -296,21 +255,6 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void cbJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbJugadorActionPerformed
-
-        if (rbActivos.isSelected()) {
-         
-//            int cantidadPatrociniosActivos = 0;
-//            cantidadPatrociniosActivos = (patrocinioData.cantidadPatrociniosActivos((Jugador) cbJugador.getSelectedItem()));
-//            String cantidad = cantidadPatrociniosActivos+"";
-//         lblPatrociniosActivos.setText(cantidad);
-            llenarTablaPatrocinios(true);
-        } else {
-            llenarTablaPatrocinios(false);
-        }
-
-    }//GEN-LAST:event_cbJugadorActionPerformed
-
      public Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
@@ -318,130 +262,50 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
     }
 
-    private boolean validar() {
-
-        if (jdcInicioContrato.getDate().compareTo(jdcFinContrato.getDate()) > 0) {
-            JOptionPane.showMessageDialog(null, "La fecha de inicio debe ser menor a la fecha de finalizacion de contrato.");
-            return false;
-        }
-
-        List<Patrocinio> listaPatrocinios = patrocinioData.obtenerPatrocinioJugador((Jugador) cbJugador.getSelectedItem());
-        for (Patrocinio patrocinio : listaPatrocinios) {
-
-            if (patrocinio.isActivo() && (patrocinio.getFechaContratoFn().compareTo(convertToLocalDate(jdcInicioContrato.getDate())) > 0) && patrocinio.getIndumentaria().equals(cbIndumentaria.getSelectedItem())) {
-                JOptionPane.showMessageDialog(null, "Este Jugador tiene vigente un contrato para el uso de: " + cbIndumentaria.getSelectedItem());
-                return false;
-            }
-
-        }
-        return true;
-    }
-
-    private void rbActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbActivosActionPerformed
-        if (rbActivos.isSelected()) {
-            llenarTablaPatrocinios(true);
-        } else {
-            llenarTablaPatrocinios(false);
-        }
-    }//GEN-LAST:event_rbActivosActionPerformed
-
-    private void rbInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbInactivosActionPerformed
-        if (rbActivos.isSelected()) {
-            llenarTablaPatrocinios(true);
-        } else {
-            llenarTablaPatrocinios(false);
-        }
-    }//GEN-LAST:event_rbInactivosActionPerformed
-
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        Patrocinio patrocinio = new Patrocinio();
-        if (validar()){
-            
-            
-            patrocinio.setIndumentaria(cbIndumentaria.getSelectedItem().toString());
-            patrocinio.setJugador((Jugador) cbJugador.getSelectedItem());
-            patrocinio.setPatrocinador((Patrocinador) cbSponsor.getSelectedItem());
-            patrocinio.setFechaContraroIn(convertToLocalDate(jdcInicioContrato.getDate()));
-            patrocinio.setFechaContratoFn(convertToLocalDate(jdcFinContrato.getDate()));
-            patrocinio.setActivo(true);
-            
-            
-            
-            if (patrocinioData.guardarPatrocinio(patrocinio)){
-                 JOptionPane.showMessageDialog(null, "Se registro correctamente el contrato.");
-            }else{
-            JOptionPane.showMessageDialog(null, "No se pudo registrar el contrato");
-            }
-        
-            llenarTablaPatrocinios(true);
-        
-        
-        }
-
-    }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private void tblPatrocinioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPatrocinioMouseClicked
-        Patrocinio patrocinio=new Patrocinio();
-//        Patrocinador  patrocinador;
-        
-        int filaSeleccionada = tblPatrocinio.getSelectedRow();
-//        JOptionPane.showMessageDialog(null, tblPatrocinio.getValueAt(filaSeleccionada, 0));
-        
-          String indumentaria = ((String) tblPatrocinio.getValueAt(filaSeleccionada, 1));
-          String patrocinador = ((String) tblPatrocinio.getValueAt(filaSeleccionada, 0));
-          String jugador = ((String) tblPatrocinio.getValueAt(filaSeleccionada, 2));
-          String fechaInicio = (tblPatrocinio.getValueAt(filaSeleccionada, 3).toString());
-          String fechaFin = (tblPatrocinio.getValueAt(filaSeleccionada, 4).toString());
    
-          if (rbActivos.isSelected()){
-          String confirmacion = "¿Desea dar de Baja este Contrato? \n" + patrocinador + "\n" + indumentaria + "\n" + jugador + "\n" + fechaInicio + "\n" + fechaFin;
-          if (JOptionPane.showConfirmDialog(null, confirmacion,"¿Desea dar de Baja Contrato?" ,
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-          Patrocinio patrocinioBaja = new Patrocinio();
-          patrocinioBaja = patrocinioData.buscarPatrocinioJugadorContrato((Jugador) cbJugador.getSelectedItem(), fechaInicio, fechaFin, indumentaria, 1);
-          if (patrocinioData.desactivarPatrocinio(patrocinioBaja)){
-          llenarTablaPatrocinios(true);
-          }
-          }
-          }else{
-              
-            JOptionPane.showMessageDialog(null, "No se puede Reactivar un contrato. Se debe generar nuevamente.");  
-//          String confirmacion = "¿Desea Activar este Contrato? \n" + patrocinador + "\n" + indumentaria + "\n" + jugador + "\n" + fechaInicio + "\n" + fechaFin;
-//          if (JOptionPane.showConfirmDialog(null, confirmacion,"¿Desea Activar Contrato?" ,
-//                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-//          Patrocinio patrocinioBaja = new Patrocinio();
-//          patrocinioBaja = patrocinioData.buscarPatrocinioJugadorContrato((Jugador) cbJugador.getSelectedItem(), fechaInicio, fechaFin, indumentaria, 0);
-//          if (patrocinioData.activarPatrocinio(patrocinioBaja)){
-//          llenarTablaPatrocinios(true);
-//          }
-//          }
-          }
 
-          
-          
-          
-          
+    private void jbRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarActionPerformed
+        
 
-    }//GEN-LAST:event_tblPatrocinioMouseClicked
+    }//GEN-LAST:event_jbRegistrarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(jtfDni.getText().isEmpty()){
+           JOptionPane.showMessageDialog(this, "Para buscar ingrese el Dni");
+       }else{
+        Conexion c = new Conexion();
+        JugadorData jd = new JugadorData(c);
+        int dni = Integer.parseInt(jtfDni.getText());
+        Jugador j = jd.buscarJugadorPorDni(dni) ;
+        
+        if(j.getNombreApellido()!= null){
+            jtfJugador.setText(j+"");
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "El Jugador no existe");
+        }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbIndumentaria;
-    private javax.swing.JComboBox<Jugador> cbJugador;
-    private javax.swing.JComboBox<Sponsor> cbSponsor;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JRadioButton rbActivos;
-    private javax.swing.JRadioButton rbInactivos;
-    private javax.swing.JTable tblPatrocinio;
+    private javax.swing.JButton jbRegistrar;
+    private javax.swing.JComboBox<String> jcbSponsor;
+    private javax.swing.JTable jtblPatrocinios;
+    private javax.swing.JTextField jtfDni;
+    private javax.swing.JTextField jtfJugador;
     // End of variables declaration//GEN-END:variables
 }

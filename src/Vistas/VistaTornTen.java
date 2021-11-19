@@ -39,6 +39,7 @@ public class VistaTornTen extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jmiSponsor = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jmiPatrocinio = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jmTorneo1 = new javax.swing.JMenu();
@@ -103,7 +104,16 @@ public class VistaTornTen extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("jMenu4");
+        jMenu4.setText(" Patrocinio");
+
+        jmiPatrocinio.setText("Agragar Patrocinio");
+        jmiPatrocinio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPatrocinioActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jmiPatrocinio);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("jMenu5");
@@ -219,6 +229,15 @@ public class VistaTornTen extends javax.swing.JFrame {
         jdpEscritorio.add(vs);
     }//GEN-LAST:event_jmiSponsorActionPerformed
 
+    private void jmiPatrocinioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPatrocinioActionPerformed
+        // TODO add your handling code here:
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        Patrocinios p = new Patrocinios();
+        p.setVisible(true);
+        jdpEscritorio.add(p);
+    }//GEN-LAST:event_jmiPatrocinioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -270,6 +289,7 @@ public class VistaTornTen extends javax.swing.JFrame {
     private javax.swing.JMenu jmTorneo1;
     private javax.swing.JMenu jmiEstadio;
     private javax.swing.JMenuItem jmiJugador;
+    private javax.swing.JMenuItem jmiPatrocinio;
     private javax.swing.JMenuItem jmiSponsor;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,11 +26,11 @@ public class VSponsor extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jButtonLimpiar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jcbMarca = new javax.swing.JComboBox<>();
         jbActualizar = new javax.swing.JButton();
         jcbActivo = new javax.swing.JCheckBox();
-        jcbArticulo = new javax.swing.JComboBox<>();
         jbEliminar = new javax.swing.JButton();
+        jtfMarca = new javax.swing.JTextField();
+        jtfArticulo = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -98,9 +98,6 @@ public class VSponsor extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 16)); // NOI18N
         jLabel3.setText("Articulo");
 
-        jcbMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jcbMarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nike", "Head", "Lacoste", "Asics", "Wilson", "Fila", "babolat" }));
-
         jbActualizar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbActualizar.setText("Actualizar");
         jbActualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -113,9 +110,6 @@ public class VSponsor extends javax.swing.JInternalFrame {
         jcbActivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jcbActivo.setText("Activo");
 
-        jcbArticulo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jcbArticulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Raqueta", "Remera", "Zapatillas", "Reloj" }));
-
         jbEliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbEliminar.setText("Eliminar");
         jbEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -124,6 +118,10 @@ public class VSponsor extends javax.swing.JInternalFrame {
                 jbEliminarActionPerformed(evt);
             }
         });
+
+        jtfMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jtfArticulo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,8 +142,9 @@ public class VSponsor extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel3))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jcbMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jcbArticulo, 0, 191, Short.MAX_VALUE)))
+                                    .addComponent(jtfMarca)
+                                    .addComponent(jtfArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                                .addGap(46, 46, 46))
                             .addComponent(jcbActivo))
                         .addGap(0, 123, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -181,15 +180,15 @@ public class VSponsor extends javax.swing.JInternalFrame {
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jcbMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbActualizar))
+                    .addComponent(jbActualizar)
+                    .addComponent(jtfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jcbArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addComponent(jcbActivo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSalir)
                     .addComponent(jButtonLimpiar)
@@ -203,8 +202,8 @@ public class VSponsor extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
        
-       String marca = (jcbMarca.getSelectedItem()+"");
-       String articulo = (jcbArticulo.getSelectedItem()+"");
+       String marca = (jtfMarca.getText());
+       String articulo = jtfArticulo.getText();
        boolean activo = jcbActivo.isSelected();
        
        Conexion c = new Conexion();
@@ -234,8 +233,8 @@ public class VSponsor extends javax.swing.JInternalFrame {
         
         if(s.getMarca() != null){
             
-            jcbArticulo.setSelectedItem(s.getIndumentaria());
-            jcbMarca.setSelectedItem(s.getMarca());
+            jtfArticulo.setText(s.getIndumentaria());
+            jtfMarca.setText(s.getMarca());
             jcbActivo.setSelected(s.isActivo());
         }else{
             JOptionPane.showMessageDialog(this, "El sponsor no existe");
@@ -256,8 +255,8 @@ public class VSponsor extends javax.swing.JInternalFrame {
         }else{  
              
        int id = Integer.parseInt(jtIdSponsor.getText());
-       String marca = (jcbMarca.getSelectedItem()+"");
-       String articulo = (jcbArticulo.getSelectedItem()+"");
+       String marca = jtfMarca.getText();
+       String articulo = jtfArticulo.getText();
        boolean activo = jcbActivo.isSelected();
        
        Conexion c = new Conexion();
@@ -306,8 +305,8 @@ public class VSponsor extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbSalir;
     private javax.swing.JCheckBox jcbActivo;
-    private javax.swing.JComboBox<String> jcbArticulo;
-    private javax.swing.JComboBox<String> jcbMarca;
     private javax.swing.JTextField jtIdSponsor;
+    private javax.swing.JTextField jtfArticulo;
+    private javax.swing.JTextField jtfMarca;
     // End of variables declaration//GEN-END:variables
 }

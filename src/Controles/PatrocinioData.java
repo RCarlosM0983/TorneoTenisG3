@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class PatrocinioData {
         private Connection con;
@@ -22,46 +23,51 @@ public class PatrocinioData {
     
     public void guardarPatrocinio(Patrocinio patrocinio) {
      
-            String sql = "INSERT INTO patrocinio (id_patrocinio, id_sponsor, id_jugador, activo) VALUES ( ? , ? , ? , ? ))";
+            String sql = "INSERT INTO patrocinio (id_sponsor, id_jugador, activo) VALUES ( ? , ? , ? ))";
             try {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 
-                ps.setInt(1, patrocinio.getIdPatrocinio());
-                ps.setInt(2, patrocinio.getIdPatrocinador().getIdSponsor());
-                ps.setInt(3, patrocinio.getIdJugador().getIdJugador());
-                ps.setBoolean(4,patrocinio.isActivo()); 
+                ps.setInt(1, patrocinio.getSponsor().getIdSponsor());
+                ps.setInt(2, patrocinio.getJugador().getIdJugador());
+                ps.setBoolean(3,patrocinio.isActivo()); 
                 ps.executeUpdate();
                 
-                System.out.println("Patrocinio guardado con exito.");
-        } catch (SQLException ex) {
-            System.out.println("Error al guardar Sponsor "+ex);
+               JOptionPane.showMessageDialog(null, "Patrocinio guardado con exito.");
+             } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null, "Error al guardar Sponsor "+ex);
         }}
     
     public void modificarPatrocinio (Patrocinio patrocinio) {
-        String sql = "UPDATE patrocinio SET id_patrocinio = ?, id_sponsor = ?, id_jugador = ?,  activo = ?  WHERE id_patrocinio = ? ";
+        String sql = "UPDATE patrocinio SET  id_sponsor = ?, id_jugador = ?,  activo = ?  WHERE id_patrocinio = ? ";
         try{
-            PreparedStatement ps = con.prepareStatement(sql);
-            
-            ps.setInt(1, patrocinio.getIdPatrocinio());
-            ps.setInt(2, patrocinio.getIdPatrocinador().getIdSponsor());
-            ps.setInt(3, patrocinio.getIdJugador().getIdJugador());
-            ps.setBoolean(4,patrocinio.isActivo());
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                     
+            ps.setInt(1, patrocinio.getSponsor().getIdSponsor());
+            ps.setInt(2, patrocinio.getJugador().getIdJugador());
+            ps.setBoolean(3,patrocinio.isActivo());
+            ps.setInt(4, patrocinio.getIdPatrocinio());
              
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            
+           if(ps.executeUpdate()>0){
+            JOptionPane.showMessageDialog(null, "Sponsor actualizado");
+        
+             }else{
+              JOptionPane.showMessageDialog(null, "El Sponsor no existe"); 
+           }
             ps.close();
-                System.out.println("Patrocinio modificado con exito.");
-        }
-        catch (SQLException ex){
-                System.out.println("Error al actualizar patrocinio: "+ex);
+           } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar Sponsor");
         }
 
  }
-    
+    /*
     public Patrocinio buscarPatrocinio (int ID){
         Patrocinio pat = new Patrocinio();
         
-        SponsorData s = new SponsorData(conexion);
-        JugadorData j=new JugadorData(conexion);
+        SponsorData sd = new SponsorData(conexion);
+        JugadorData jd=new JugadorData(conexion);
         
         String sql = "SELECT * FROM patrocinio Where id_patrocinio = ? ";
         try{
@@ -87,7 +93,7 @@ public class PatrocinioData {
             System.out.println("Patrocinio no encontrado: " + ex);
         }
           return pat;
-}   
+}   */
     
     public void bajaPatrocinio (int id){
          String sql = "UPDATE patrocinio SET activo = ? WHERE id_patrocinio = ? ";
@@ -148,10 +154,10 @@ public class PatrocinioData {
                   patrocinio.setIdPatrocinio(rs.getInt("id_patrocinio"));
                   
                   Sponsor spon = s.buscarSponsor(rs.getInt("id_sponsor"));
-                  patrocinio.setIdPatrocinador(spon);
+                  patrocinio.setSponsor(spon);
                   
                   Jugador jug = j.buscarJugador(rs.getInt("id_jugador"));
-                  patrocinio.setIdJugador(jug);
+                  patrocinio.setJugador(jug);
                   
                   patrocinio.setActivo(rs.getBoolean("activo"));
                   
