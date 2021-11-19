@@ -163,6 +163,29 @@ public class SponsorData {
         return resultados; 
     }
     
+     public List<Sponsor> obtenerSponsoresActivos(){
+
+        List<Sponsor> resultados = new ArrayList<>();
+
+        String sql = "SELECT * FROM sponsor WHERE activo = 1";
+
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+                 Sponsor sponsor = new Sponsor();
+                 sponsor.setIdSponsor(rs.getInt("id_sponsor"));
+                 sponsor.setMarca(rs.getString("marca"));
+                 sponsor.setActivo(rs.getBoolean("activo"));
+                 resultados.add(sponsor);
+            }
+            ps.close();
+            }
+        catch(SQLException ex){
+                System.out.println("No se encontraron resultados: "+ ex);
+            }
+        return resultados; 
+    }
 }
 
 

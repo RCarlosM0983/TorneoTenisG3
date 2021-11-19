@@ -22,7 +22,7 @@ public class ListaSponsores extends javax.swing.JInternalFrame {
         this.sponsorData = sd;
         modelo = new DefaultTableModel();
         
-        sponsores = (ArrayList<Sponsor>) sponsorData.obtenerSponsores();
+        sponsores = (ArrayList<Sponsor>) sponsorData.buscarTodosSponsor();
         sponsoresActivos = (ArrayList<Sponsor>) sponsorData.obtenerSponsoresActivos();
         
         vaciarTabla();
