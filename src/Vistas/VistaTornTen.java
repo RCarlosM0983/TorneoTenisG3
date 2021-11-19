@@ -116,9 +116,14 @@ public class VistaTornTen extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
-        jMenu5.setText("jMenu5");
+        jMenu5.setText("Encuentro");
 
-        jMenuItem2.setText("jMenuItem2");
+        jMenuItem2.setText("Formulario");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem2);
 
         jMenuBar1.add(jMenu5);
@@ -237,6 +242,15 @@ public class VistaTornTen extends javax.swing.JFrame {
         p.setVisible(true);
         jdpEscritorio.add(p);
     }//GEN-LAST:event_jmiPatrocinioActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        VEncuentro e = new VEncuentro();
+        e.setVisible(true);
+        jdpEscritorio.add(e);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

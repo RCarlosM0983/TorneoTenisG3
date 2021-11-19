@@ -48,7 +48,7 @@ public class EstadioData {
   }   
 
   public ArrayList<Estadio> obtenerEstadios(){
-        Estadio e = new Estadio();
+        
         ArrayList<Estadio> estadios=new ArrayList<>();        
         String sql="SELECT * FROM estadio";
         
@@ -57,6 +57,7 @@ public class EstadioData {
             ResultSet rs= ps.executeQuery();
         
             while(rs.next()){
+                Estadio e = new Estadio();
                 e.setIdEstadio(rs.getInt("id_estadio"));
                 e.setNombre(rs.getString("nombre"));
                 e.setCiudad(rs.getString("ciudad"));
@@ -168,6 +169,7 @@ public class EstadioData {
               ResultSet rs = ps.executeQuery();
 
               while(rs.next()){
+                  
                 e.setIdEstadio(rs.getInt("id_estadio"));  
                 e.setNombre(rs.getString("nombre"));
                 e.setCiudad(rs.getString("ciudad"));
@@ -188,15 +190,16 @@ public class EstadioData {
     }
   
   public ArrayList<Estadio> obtenerEstadiosEnUso(){
-        Estadio e = new Estadio();
+        
         ArrayList<Estadio> estadios=new ArrayList<>();        
-        String sql="SELECT * FROM estadio WHERE enUso=true";
+        String sql="SELECT * FROM estadio WHERE habilitado = 1";
         
         try {
             PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs= ps.executeQuery();
         
             while(rs.next()){
+                Estadio e = new Estadio();
                 e.setIdEstadio(rs.getInt("id_estadio"));
                 e.setNombre(rs.getString("nombre"));
                 e.setCiudad(rs.getString("ciudad"));
