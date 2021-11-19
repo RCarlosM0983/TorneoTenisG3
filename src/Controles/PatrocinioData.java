@@ -23,7 +23,7 @@ public class PatrocinioData {
     
     public void guardarPatrocinio(Patrocinio patrocinio) {
      
-            String sql = "INSERT INTO patrocinio (id_sponsor, id_jugador, activo) VALUES ( ? , ? , ? ))";
+            String sql = "INSERT INTO patrocinio(id_sponsor, id_jugador, activo) VALUES (?, ?, ?)";
             try {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 
@@ -34,7 +34,7 @@ public class PatrocinioData {
                 
                JOptionPane.showMessageDialog(null, "Patrocinio guardado con exito.");
              } catch (SQLException ex) {
-              JOptionPane.showMessageDialog(null, "Error al guardar Sponsor "+ex);
+              JOptionPane.showMessageDialog(null, "Error al guardar Patrocinio ");
         }}
     
     public void modificarPatrocinio (Patrocinio patrocinio) {
@@ -51,14 +51,14 @@ public class PatrocinioData {
             ResultSet rs = ps.getGeneratedKeys();
             
            if(ps.executeUpdate()>0){
-            JOptionPane.showMessageDialog(null, "Sponsor actualizado");
+            JOptionPane.showMessageDialog(null, "Patrocinio actualizado");
         
              }else{
-              JOptionPane.showMessageDialog(null, "El Sponsor no existe"); 
+              JOptionPane.showMessageDialog(null, "El Patrocinio no existe"); 
            }
             ps.close();
            } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar Sponsor");
+            JOptionPane.showMessageDialog(null, "Error al actualizar Patrocinio");
         }
 
  }
@@ -142,7 +142,7 @@ public class PatrocinioData {
     public List<Patrocinio> buscarTodosPatrocinio(){
           List<Patrocinio> resultados = new ArrayList<>();
           
-          SponsorData s = new SponsorData(conexion);          
+         SponsorData s = new SponsorData(conexion);          
           JugadorData j = new JugadorData(conexion);
           
           String sql = "SELECT * FROM patrocinio ";
@@ -151,22 +151,21 @@ public class PatrocinioData {
               ResultSet rs = ps.executeQuery();
               while(rs.next()){
                   Patrocinio patrocinio = new Patrocinio();
-                  patrocinio.setIdPatrocinio(rs.getInt("id_patrocinio"));
-                  
+                  patrocinio.setIdPatrocinio(rs.getInt("id_patrocinio"));                
                   Sponsor spon = s.buscarSponsor(rs.getInt("id_sponsor"));
-                  patrocinio.setSponsor(spon);
-                  
                   Jugador jug = j.buscarJugador(rs.getInt("id_jugador"));
-                  patrocinio.setJugador(jug);
+                  boolean activo = rs.getBoolean("activo");
                   
-                  patrocinio.setActivo(rs.getBoolean("activo"));
+                  patrocinio.setSponsor(spon); 
+                  patrocinio.setJugador(jug);
+                  patrocinio.setActivo(activo);
                   
                   resultados.add(patrocinio);
               }
               ps.close();
           }
           catch(SQLException ex){
-              System.out.println("No se encontraron resultados: "+ ex);
+              JOptionPane.showMessageDialog(null, "No se encontraron resultados: ");
           }
         return resultados;
   }
