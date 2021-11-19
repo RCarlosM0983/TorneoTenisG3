@@ -20,10 +20,7 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
     
     public ListaJugadores() {
         initComponents();
-        
-        conexion = new Conexion();
-        jugadorData = new JugadorData(conexion);
-        
+
         jugadores = (ArrayList<Jugador>) jugadorData.obtenerJugadores();
         jugadoresActivos = (ArrayList<Jugador>) jugadorData.obtenerJugadoresActivos();
          
