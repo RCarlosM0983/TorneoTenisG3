@@ -50,11 +50,11 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         rbActivos.setSelected(true);
         llenarComboJugadores(true);
         llenarComboSponsores(true);
-        llenarTablaPatrocinios(true);
+        llenarTablaPatrocinios();
 
     }
 
-    private void llenarTablaPatrocinios(boolean Activo) {
+    private void llenarTablaPatrocinios() {
         DefaultTableModel model = (DefaultTableModel) tblPatrocinio.getModel();
         model.setRowCount(0);
 
@@ -71,7 +71,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
 
     private void llenarComboJugadores(Boolean activo) {
 
-        listaJugadores = (ArrayList) jugadorData.obtenerJugador();
+        listaJugadores = (ArrayList) jugadorData.obtenerJugadores();
         int largoLista = listaJugadores.size();
         Jugador[] nombre = new Jugador[largoLista];
 

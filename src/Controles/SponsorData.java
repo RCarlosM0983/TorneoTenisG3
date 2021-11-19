@@ -9,31 +9,35 @@ import javax.swing.JOptionPane;
 public class SponsorData {
     private Connection con;
 
-    public SponsorData(Conexion conexion) {
-        this.con = conexion.getConexion();
+    
+    public SponsorData(Conexion conn){
+      
+      con = conn.conectar();
+    
     }
 
-    public void guardarSponsor(Sponsor sponsor) {
+    public void guardarSponsor(Sponsor s) {
 
-            String sql = "INSERT INTO sponsor ( id_sponsor, marca, indumentaria, activo) VALUES ( ? , ? , ? , ? )";
+            String sql = "INSERT INTO sponsor (marca, indumentaria, activo) VALUES (?, ?, ?)";
             try {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-                ps.setInt(1, sponsor.getIdSponsor());
-                ps.setString(2, sponsor.getMarca());
-                ps.setString(3, sponsor.getIndumentaria());
-                ps.setBoolean(4, sponsor.isActivo());
+               
+                ps.setString(1, s.getMarca());
+                ps.setString(2, s.getIndumentaria());
+                ps.setBoolean(3, s.isActivo());
 
                 ps.executeUpdate();
-                ResultSet rs=ps.getGeneratedKeys();
-
-                if(rs.next()){
-                sponsor.setIdSponsor(rs.getInt(1));
-                JOptionPane.showMessageDialog(null,"Guardado de Sponsor satisfactorio");
+                ResultSet rs = ps.getGeneratedKeys();
+            
+            if(rs.next()){
+                s.setIdSponsor(rs.getInt(1));
+                JOptionPane.showMessageDialog(null, "Sponsor guardado");
             }
-                ps.close();
+            ps.close();
+            
         } catch (SQLException ex) {
-            System.out.println("Error al guardar Sponsor "+ ex);
+            JOptionPane.showMessageDialog(null, "No se pudo guardar Sponsor ");
         }
      }
 
@@ -49,6 +53,7 @@ public class SponsorData {
                    spon.setIdSponsor(rs.getInt("id_sponsor"));
                    spon.setMarca(rs.getString("marca"));
                    spon.setActivo(rs.getBoolean("activo"));
+                   spon.setIndumentaria(rs.getString("indumentaria"));
                 }
         }
         catch(SQLException ex){
@@ -58,29 +63,37 @@ public class SponsorData {
 } 
 
     public void modificadarSponsor (Sponsor s) {
-        String sql = "UPDATE sponsor SET marca = ? , activo = ? Where id_sponsor = ? ";
+        String sql = "UPDATE sponsor SET marca = ? , indumentaria = ?, activo = ? WHERE id_sponsor = ? ";
         try{
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1,s.getMarca());
-            ps.setBoolean(2, s.isActivo());
-            ps.setInt(3, s.getIdSponsor());
+            ps.setString(2, s.getIndumentaria());
+            ps.setBoolean(3, s.isActivo());
+            ps.setInt(4, s.getIdSponsor());
 
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            
+           if(ps.executeUpdate()>0){
+        JOptionPane.showMessageDialog(null, "Sponsor actualizado");
+        
+      }else{
+              JOptionPane.showMessageDialog(null, "El Sponsor no existe"); 
+           }
             ps.close();
-                System.out.println("Sponsor modificado con exito.");
-        }
-        catch (SQLException ex){
-                System.out.println("Error al actualizar sponsor: "+ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar Sponsor");
         }
 
  }
 
     public Sponsor bajaSponsor (int id){
-         Sponsor spon = new Sponsor();
+          Sponsor spon = new Sponsor();
          String sql = "UPDATE sponsor SET activo = ? WHERE id_sponsor = ? ";
+
          try{
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setBoolean(1, false);
             ps.setInt(2, id);
@@ -114,20 +127,16 @@ public class SponsorData {
 }
 
     public void borrarSponsor(int id){
-            String sql="DELETE FROM sponsor WHERE id_sponsor = ? ";
-            PreparedStatement ps;
-
-            try {
-                ps = con.prepareStatement(sql);
+           String sql = " DELETE FROM sponsor WHERE id_sponsor = ? ";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setInt(1, id);
-
-                ps.executeUpdate();
-                ps.close();
-
-                System.out.println("Sponsor borrado definitivamente");
-            } catch (SQLException ex) {
-                 System.out.println("Error al borrar "+ex);
-            }
+                if(ps.executeUpdate()>0){
+                    JOptionPane.showMessageDialog(null, "Sponsor Eliminado");
+                }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar sponsor");
+        }
     }
 
     public List<Sponsor> buscarTodosSponsor(){

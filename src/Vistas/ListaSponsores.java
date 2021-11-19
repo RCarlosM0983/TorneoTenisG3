@@ -47,6 +47,9 @@ public class ListaSponsores extends javax.swing.JInternalFrame {
         jCheckBoxActivos = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Sponsores");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
