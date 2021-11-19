@@ -10,14 +10,13 @@ public class EstadioData {
     
      private Connection con = null;
 
-    public EstadioData() {
-    }
-     
-     
+  public EstadioData() {
+    } 
   
   public EstadioData(Conexion conn){ 
       con = conn.conectar();
     }
+  
   public void registrarEstadio(Estadio e){
     String sql = "INSERT INTO estadio(nombre, ciudad, ancho, largo, categoria, habilitado, direccion, capacidad, activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
@@ -46,8 +45,7 @@ public class EstadioData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo registrar el estadio "+ex);
         }
-  }
-   
+  }   
 
   public ArrayList<Estadio> obtenerEstadios(){
         Estadio e = new Estadio();
@@ -112,6 +110,7 @@ public class EstadioData {
 
       return e;
     }
+  
   public void borrarEstadio(int idEstadio){
       
       String sql = " DELETE FROM estadio WHERE id_estadio = ? ";
@@ -157,6 +156,7 @@ public class EstadioData {
             JOptionPane.showMessageDialog(null, "Error al actualizar Estadio");
         }
   }
+  
   public Estadio buscarEstadio(String nombreEstadio){
         Estadio e = new Estadio();
         String sql = "SELECT * FROM estadio WHERE id_estadio = ? ";
@@ -186,7 +186,8 @@ public class EstadioData {
           }
       return e;
     }
-   public ArrayList<Estadio> obtenerEstadiosEnUso(){
+  
+  public ArrayList<Estadio> obtenerEstadiosEnUso(){
         Estadio e = new Estadio();
         ArrayList<Estadio> estadios=new ArrayList<>();        
         String sql="SELECT * FROM estadio WHERE enUso=true";

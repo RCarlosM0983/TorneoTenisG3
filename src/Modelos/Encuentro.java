@@ -6,15 +6,17 @@ import java.time.LocalDate;
 public class Encuentro {
     private int id_encuentro;
     private LocalDate fechaEnc;
-    private int estadoEnCurso;
+    private String estadoEnCurso;
     private Jugador ganador;
     private Jugador jugador1;
     private Jugador jugador2;
     private Estadio estadio;
     private Torneo torneo;
     private boolean activo;
+    private String resultado= "0-0";   
+    
 
-    public Encuentro(int id_encuentro, LocalDate fechaEnc, int estadoEnCurso, Jugador ganador, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
+    public Encuentro(int id_encuentro, LocalDate fechaEnc, String estadoEnCurso, Jugador ganador, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
         this.id_encuentro = id_encuentro;
         this.fechaEnc = fechaEnc;
         this.estadoEnCurso = estadoEnCurso;
@@ -26,7 +28,7 @@ public class Encuentro {
         this.activo = activo;
     }
 
-    public Encuentro(LocalDate fechaEnc, int estadoEnCurso, Jugador ganador, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
+    public Encuentro(LocalDate fechaEnc, String estadoEnCurso, Jugador ganador, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo, String resultado) {
         this.fechaEnc = fechaEnc;
         this.estadoEnCurso = estadoEnCurso;
         this.ganador = ganador;
@@ -35,9 +37,10 @@ public class Encuentro {
         this.estadio = estadio;
         this.torneo = torneo;
         this.activo = activo;
+        this.resultado = resultado;
     }
 
-    public Encuentro(int id_encuentro, LocalDate fechaEnc, int estadoEnCurso, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
+    public Encuentro(int id_encuentro, LocalDate fechaEnc, String estadoEnCurso, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
         this.id_encuentro = id_encuentro;
         this.fechaEnc = fechaEnc;
         this.estadoEnCurso = estadoEnCurso;
@@ -49,7 +52,7 @@ public class Encuentro {
     }
 
     
-    public Encuentro(LocalDate fechaEnc, int estadoEnCurso, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
+    public Encuentro(LocalDate fechaEnc, String estadoEnCurso, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
         this.fechaEnc = fechaEnc;
         this.estadoEnCurso = estadoEnCurso;
         this.jugador1 = jugador1;
@@ -79,11 +82,11 @@ public class Encuentro {
         this.fechaEnc = fechaEnc;
     }
 
-    public int getEstadoEnCurso() {
+    public String getEstadoEnCurso() {
         return estadoEnCurso;
     }
 
-    public void setEstadoEnCurso(int estadoEnCurso) {
+    public void setEstadoEnCurso(String estadoEnCurso) {
         this.estadoEnCurso = estadoEnCurso;
     }
 
@@ -134,10 +137,18 @@ public class Encuentro {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+       
+    public String getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
 
     @Override
     public String toString() {
-        return "Fecha de encuentro: " + fechaEnc;
+        return "idEncuentro=" + id_encuentro + "Fecha de encuentro: " + fechaEnc;
     }
     
 }

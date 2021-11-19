@@ -9,12 +9,7 @@ import javax.swing.JOptionPane;
 
 public class TorneoData {
     
-  private Connection con = null;
-
-  public TorneoData() {
-    }
-     
-     
+  private Connection con = null;     
   
   public TorneoData(Conexion conn){ 
       con = conn.conectar();
@@ -100,7 +95,31 @@ public class TorneoData {
       return t;
     }
   
-   public Torneo buscarTorneoXnombre(String nombreTorneo) {
+  public Torneo buscarTorneoId(int id) {
+       Torneo t = null;
+        
+        String query = "SELECT * FROM torneos WHERE id_torneo = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                t = new Torneo();
+                t.setIdTorneo(rs.getInt("id_torneo"));
+                t.setNombre(rs.getString("nombre"));
+                t.setFechaInicio(rs.getDate("fecha_ini").toLocalDate());
+                t.setFechaFin(rs.getDate("fecha_fin").toLocalDate());
+                t.setActivo(rs.getBoolean("activo"));
+            }
+            ps.close();
+        }catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "ERROR \nTorneo No Encontrado");
+         }
+        return t;       
+   }
+  
+  public Torneo buscarTorneoXnombre(String nombreTorneo) {
         Torneo t = new Torneo();
         String sql = "SELECT * FROM torneos WHERE nombre = ? ";
       
@@ -169,7 +188,7 @@ public class TorneoData {
         }
   }
   
-     public void guardarTorneo(Torneo t) {
+  public void guardarTorneo(Torneo t) {
        String query = "INSERT INTO torneos (nombre, fecha_ini, fecha_fin, activo) VALUES (?,?,?,?)";
 
         try{
@@ -193,7 +212,7 @@ public class TorneoData {
        
    }
      
-     public ArrayList<Torneo> obtenerTorneosActivos(){
+  public ArrayList<Torneo> obtenerTorneosActivos(){
         
         ArrayList<Torneo> torneos=new ArrayList<>();        
         String sql="SELECT * FROM torneos WHERE activo = 1 ";

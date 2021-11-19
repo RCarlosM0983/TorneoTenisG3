@@ -12,16 +12,7 @@ public class JugadorData {
     private Connection con;
   
    public JugadorData(Conexion conn){
-       /*
-       try {
-            con = conn.getConexion();
-      
-        } catch (SQLException ex) {
-            System.out.println("Error en la conexion "+ ex);
-        }
-*/
-      con = conn.conectar();
-    
+      con = conn.conectar();    
     }
   
    public void guardarJugador(Jugador j){
@@ -188,6 +179,34 @@ public class JugadorData {
 
       return j;
    }
+   
+   public Jugador buscarJugadorId(int id){
+        Jugador j = null;
+        
+        String query = "SELECT * FROM jugador WHERE id_jugador = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            ResultSet rst = ps.executeQuery();
+            
+            while(rst.next()){
+                j = new Jugador();
+                j.setIdJugador(rst.getInt("id_jugador"));
+                j.setNombreApellido(rst.getString("nombreApellido"));
+                j.setDni(rst.getInt("dni"));
+                j.setFechaNac(rst.getDate("fechaNac").toLocalDate());
+                j.setAltura(rst.getFloat("altura"));
+                j.setPeso(rst.getFloat("peso"));
+                j.setEstilo(rst.getString("estilo"));
+                j.setManoHabil(rst.getString("manoHabil"));
+                j.setActivo(rst.getBoolean("activo"));
+            }
+            ps.close();
+        }catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "ERROR...Jugador por ID No Encontrado");
+         }
+        return j;
+    }
    
    public ArrayList<Jugador> obtenerJugadoresActivos(){
         
