@@ -11,7 +11,7 @@ public class Ranking extends javax.swing.JInternalFrame {
     private TorneoData torneoData;
     private DefaultTableModel modelo = new DefaultTableModel();
     private ArrayList<Jugador> jugadores;
-
+/*
     public Ranking(MenuPrincipal1 menu, TorneoData torneoData) {
         initComponents();
         
@@ -141,7 +141,7 @@ public class Ranking extends javax.swing.JInternalFrame {
 
         //menu.setVisible();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+/*
     private void armarCabecera() {
         ArrayList<Object> titulos = new ArrayList<>();
 
@@ -179,7 +179,7 @@ public class Ranking extends javax.swing.JInternalFrame {
             }
         }
     }
-
+*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<Torneo> jComboBoxCopa;
