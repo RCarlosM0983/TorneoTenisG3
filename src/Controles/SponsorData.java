@@ -152,6 +152,7 @@ public class SponsorData {
                  Sponsor sponsor = new Sponsor();
                  sponsor.setIdSponsor(rs.getInt("id_sponsor"));
                  sponsor.setMarca(rs.getString("marca"));
+                 sponsor.setIndumentaria(rs.getString("indumentaria"));
                  sponsor.setActivo(rs.getBoolean("activo"));
                  resultados.add(sponsor);
             }

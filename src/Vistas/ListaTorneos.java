@@ -15,7 +15,6 @@ public class ListaTorneos extends javax.swing.JInternalFrame {
     private DefaultTableModel modelo  = new DefaultTableModel();
     private ArrayList<Torneo> torneos;
     private ArrayList<Torneo> torneosActivos;    
-    private MenuPrincipal1 menu;
     private Conexion conexion = new Conexion();
     private TorneoData torneoData = new TorneoData(conexion);
 

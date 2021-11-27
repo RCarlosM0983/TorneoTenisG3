@@ -23,21 +23,23 @@ public class Patrocinios extends javax.swing.JInternalFrame {
 
     private ArrayList<Jugador> listaJugadores = new ArrayList<>();
     private ArrayList<Sponsor> listaSponsores = new ArrayList<>();
-    PatrocinioData patrocinioData;
-    ArrayList<Patrocinio> listaPatrocinio = new ArrayList<>();
+    ArrayList<Patrocinio> patrocinios = new ArrayList<>();
     Patrocinio patrocinio;
     
     public Patrocinios() {
         initComponents();
         modelo = new DefaultTableModel();
+        
         armarCabecera();
-        llenarCombo();
-       // llenarTablaPatrocinios();
+        llenarComboJugador();
+        llenarComboSponsor();
+        llenarTablaPatrocinios();
     }
     private void armarCabecera(){
         ArrayList<Object>columnas = new ArrayList<>();
         columnas.add("Sponsor");
         columnas.add("Jugador");
+        columnas.add("Activo");
         
         for(Object titulo: columnas){
             modelo.addColumn(titulo);
@@ -45,7 +47,7 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         jtblPatrocinios.setModel(modelo);
     }
 
-    private void llenarCombo(){
+    private void llenarComboSponsor(){
         Conexion c = new Conexion();
         SponsorData sp = new SponsorData(c);
         ArrayList<Sponsor>sponsores = (ArrayList)sp.obtenerSponsoresActivos();
@@ -55,12 +57,50 @@ public class Patrocinios extends javax.swing.JInternalFrame {
            jcbSponsor.addItem(spon);
         }
     }
+    private void llenarComboJugador(){
+        Conexion c = new Conexion();
+        JugadorData jd = new JugadorData(c);
+        ArrayList<Jugador>jugadores = (ArrayList)jd.obtenerJugadores();
+        
+        for(Jugador j: jugadores){
+            
+           jcbJugador.addItem(j);
+        }
+    }
+     private void borrarFilasTabla(){
+    
+        int fila = modelo.getRowCount()-1;
+        for (int i = fila; i >= 0; i--) {
+            modelo.removeRow(i);
+            
+        }
+    }
 
     private void llenarTablaPatrocinios() {
+        borrarFilasTabla();
         Conexion c = new Conexion();
         PatrocinioData pd = new PatrocinioData(c);
-        ArrayList<Patrocinio>patrocinios = (ArrayList)pd.buscarTodosPatrocinio();
-        
+        patrocinios = pd.buscarTodosPatrocinio();
+        for(Patrocinio pat: patrocinios){
+            
+           modelo.addRow(new Object[] {pat.getSponsor(), pat.getJugador(), pat.isActivo()});
+        }
+    }
+    private void cargarInactivos(){
+        borrarFilasTabla();
+        Conexion c = new Conexion();
+        PatrocinioData pd = new PatrocinioData(c);
+        patrocinios = pd.buscarPatrociniosInactivos();
+        for(Patrocinio pat: patrocinios){
+            
+           modelo.addRow(new Object[] {pat.getSponsor(), pat.getJugador()});
+        }
+    }
+    private void cargarActivos(){
+        borrarFilasTabla();
+        Conexion c = new Conexion();
+        PatrocinioData pd = new PatrocinioData(c);
+        patrocinios = pd.buscarPatrociniosActivos();
         for(Patrocinio pat: patrocinios){
             
            modelo.addRow(new Object[] {pat.getSponsor(), pat.getJugador()});
@@ -85,15 +125,14 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         btnSalir = new javax.swing.JButton();
         jbRegistrar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jtfDni = new javax.swing.JTextField();
-        jtfJugador = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtblPatrocinios = new javax.swing.JTable();
         jcbSponsor = new javax.swing.JComboBox<>();
         jcbActivo = new javax.swing.JCheckBox();
-        jButton2 = new javax.swing.JButton();
-        jbEliminar = new javax.swing.JButton();
+        jcbJugador = new javax.swing.JComboBox<>();
+        jrbActivos = new javax.swing.JRadioButton();
+        jrbInactivos = new javax.swing.JRadioButton();
+        jrbTodos = new javax.swing.JRadioButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,11 +156,12 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         jLabel2.setText("Gestion de Patrocinios");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("DNI Jugador");
+        jLabel1.setText("Jugador");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Sponsor:");
 
+        btnSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,19 +181,6 @@ public class Patrocinios extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Patrocinios por Jugador:");
 
-        jtfJugador.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jtfJugador.setText(" ");
-        jtfJugador.setEnabled(false);
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Buscar");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jtblPatrocinios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -171,22 +198,35 @@ public class Patrocinios extends javax.swing.JInternalFrame {
 
         jcbActivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jcbActivo.setText("Activo");
-
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Actualizar");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jcbActivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jcbActivoActionPerformed(evt);
             }
         });
 
-        jbEliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jbEliminar.setText("Eliminar");
-        jbEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+        jcbJugador.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jrbActivos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jrbActivos.setText("Activos");
+        jrbActivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbEliminarActionPerformed(evt);
+                jrbActivosActionPerformed(evt);
+            }
+        });
+
+        jrbInactivos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jrbInactivos.setText("Inactivos");
+        jrbInactivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbInactivosActionPerformed(evt);
+            }
+        });
+
+        jrbTodos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jrbTodos.setText("Todos");
+        jrbTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbTodosActionPerformed(evt);
             }
         });
 
@@ -199,9 +239,6 @@ public class Patrocinios extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(219, 219, 219)
-                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(95, 95, 95)
@@ -213,52 +250,53 @@ public class Patrocinios extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel3))
                         .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jtfJugador, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                            .addComponent(jcbSponsor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jcbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))))
+                                .addComponent(jcbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                                .addComponent(jbRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jcbSponsor, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jcbJugador, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(35, 171, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(jbRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addComponent(jrbTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jrbActivos)
+                        .addGap(65, 65, 65)
+                        .addComponent(jrbInactivos))
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(62, 62, 62))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jtfDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
+                    .addComponent(jcbJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jcbSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcbActivo))
-                .addGap(27, 27, 27)
+                    .addComponent(jcbSponsor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbRegistrar)
-                    .addComponent(jButton2)
-                    .addComponent(jbEliminar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jcbActivo))
+                .addGap(10, 10, 10)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jrbActivos)
+                    .addComponent(jrbInactivos)
+                    .addComponent(jrbTodos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(btnSalir)
                 .addContainerGap())
         );
@@ -280,72 +318,51 @@ public class Patrocinios extends javax.swing.JInternalFrame {
    
 
     private void jbRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarActionPerformed
+       
        Conexion c = new Conexion();
        JugadorData jd = new JugadorData(c);
        
-       int dni = Integer.parseInt(jtfDni.getText());
-       Jugador j = jd.buscarJugadorPorDni(dni);
+       Jugador j = (Jugador)jcbJugador.getSelectedItem();
        Sponsor s = (Sponsor)jcbSponsor.getSelectedItem();
        boolean activo = jcbActivo.isSelected();
        
-      
        PatrocinioData pd = new PatrocinioData(c);
        Patrocinio p = new Patrocinio(s, j, activo);
        pd.guardarPatrocinio(p);
+       borrarFilasTabla();
+       llenarTablaPatrocinios();
+       
     }//GEN-LAST:event_jbRegistrarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jcbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbActivoActionPerformed
         // TODO add your handling code here:
-        if(jtfDni.getText().isEmpty()){
-           JOptionPane.showMessageDialog(this, "Para buscar ingrese el Dni");
-       }else{
-        Conexion c = new Conexion();
-        JugadorData jd = new JugadorData(c);
-        int dni = Integer.parseInt(jtfDni.getText());
-        Jugador j = jd.buscarJugadorPorDni(dni) ;
-        
-        if(j.getNombreApellido()!= null){
-            jtfJugador.setText(j+"");
-            
-        }else{
-            JOptionPane.showMessageDialog(this, "El Jugador no existe");
-        }
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jcbActivoActionPerformed
 
-    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+    private void jrbInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbInactivosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbEliminarActionPerformed
+        jrbTodos.setSelected(false);
+        jrbActivos.setSelected(false);
+        cargarInactivos();
+    }//GEN-LAST:event_jrbInactivosActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jrbActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbActivosActionPerformed
         // TODO add your handling code here:
-        Conexion c = new Conexion();
-        JugadorData jd = new JugadorData(c);
-        PatrocinioData pd = new PatrocinioData(c);
-        
-        if(jtfDni.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Debe completar los campos");
-        }else{  
-             
-       int dni = Integer.parseInt(jtfDni.getText());
-       Jugador j = jd.buscarJugadorPorDni(dni);
-       Sponsor s = (Sponsor)jcbSponsor.getSelectedItem();
-       boolean activo = jcbActivo.isSelected();
-       
-       
-       Patrocinio p= new Patrocinio(s, j, activo);
-       pd.modificarPatrocinio(p);
-       
-       
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
+        jrbTodos.setSelected(false);
+        jrbInactivos.setSelected(false);
+        cargarActivos();
+    }//GEN-LAST:event_jrbActivosActionPerformed
+
+    private void jrbTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTodosActionPerformed
+        // TODO add your handling code here:
+        jrbInactivos.setSelected(false);
+        jrbActivos.setSelected(false);
+        this.llenarTablaPatrocinios();
+    }//GEN-LAST:event_jrbTodosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -353,12 +370,13 @@ public class Patrocinios extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbRegistrar;
     private javax.swing.JCheckBox jcbActivo;
+    private javax.swing.JComboBox<Jugador> jcbJugador;
     private javax.swing.JComboBox<Sponsor> jcbSponsor;
+    private javax.swing.JRadioButton jrbActivos;
+    private javax.swing.JRadioButton jrbInactivos;
+    private javax.swing.JRadioButton jrbTodos;
     private javax.swing.JTable jtblPatrocinios;
-    private javax.swing.JTextField jtfDni;
-    private javax.swing.JTextField jtfJugador;
     // End of variables declaration//GEN-END:variables
 }

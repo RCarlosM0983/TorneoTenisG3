@@ -5,6 +5,15 @@
  */
 package torneotenisg3;
 
+import Controles.Conexion;
+import Controles.EncuentroData;
+import Controles.JugadorData;
+import Controles.PatrocinioData;
+import Controles.SponsorData;
+import Modelos.Jugador;
+import Modelos.Patrocinio;
+import java.time.LocalDate;
+
 /**
  *
  * @author carlo_000
@@ -16,6 +25,18 @@ public class TorneoTenisG3 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Jugador j = new Jugador();
+        Conexion c = new Conexion();
+        JugadorData jd = new JugadorData(c);
+        EncuentroData ed = new EncuentroData(c);
+        PatrocinioData pd = new PatrocinioData(c);
+        SponsorData sd = new SponsorData(c);
+        Patrocinio p = new Patrocinio();
+       //  System.out.println(pd.buscarTodosPatrocinio());
+        // System.out.println(sd.buscarTodosSponsor());
+        System.out.println(ed.buscarEncuentro(2).getGanador());
+        j = jd.buscarJugador(22);
+        
     }
     
 }

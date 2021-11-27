@@ -14,7 +14,6 @@ public class ListaJugadores extends javax.swing.JInternalFrame {
     private DefaultTableModel modelo = new DefaultTableModel();
     private ArrayList<Jugador> jugadores;
     private ArrayList<Jugador> jugadoresActivos;    
-    private MenuPrincipal1 menu; 
     private Conexion conexion = new Conexion();
     private JugadorData jugadorData = new JugadorData(conexion);
     

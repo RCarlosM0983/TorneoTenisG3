@@ -235,7 +235,7 @@ public class VTorneo extends javax.swing.JInternalFrame {
     private void JbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbEliminarActionPerformed
 
         int id_torneo = Integer.parseInt(jtId.getText());
-        torneoData.borrarTorneo(id_torneo);
+        torneoData.eliminarTorneo(id_torneo);
 
     }//GEN-LAST:event_JbEliminarActionPerformed
 
@@ -264,17 +264,23 @@ public class VTorneo extends javax.swing.JInternalFrame {
         }else{
 
             
-           String nombre = jtfNombre.getText();
+            String nombre = jtfNombre.getText();
             LocalDate fecha_ini = Instant.ofEpochMilli((jdInicio.getDate()).getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate fecha_fin = Instant.ofEpochMilli((jdFin.getDate()).getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-            boolean activo=jcbActivo.isEnabled();
+            boolean activo=jcbActivo.isSelected();
             
            Conexion c = new Conexion();
            Torneo torneo = new Torneo(nombre, fecha_ini, fecha_fin, activo);
+           if(fecha_ini.compareTo(LocalDate.now()) < 0){
+               JOptionPane.showMessageDialog(this, "La fecha de inicio debe ser mayor a la actual");
+           }else if(fecha_fin.compareTo(fecha_ini) < 0) {
+               JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser mayor a la fhecha de fin");
+           }else{
            torneoData.guardarTorneo(torneo);
            jtId.setText(torneo.getIdTorneo()+"");
            
            this.limpiar();
+           }
          }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

@@ -159,6 +159,7 @@ public class VJugador extends javax.swing.JInternalFrame {
         jcbManoHabil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Derecho/a", "Izquierdo/a" }));
 
         jdcFechaNac.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jdcFechaNac.setMaxSelectableDate(new java.util.Date(1609473663000L));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

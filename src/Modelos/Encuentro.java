@@ -6,20 +6,18 @@ import java.time.LocalDate;
 public class Encuentro {
     private int id_encuentro;
     private LocalDate fechaEnc;
-    private String estadoEnCurso;
+    private boolean finalizado;
     private Jugador ganador;
     private Jugador jugador1;
     private Jugador jugador2;
     private Estadio estadio;
     private Torneo torneo;
     private boolean activo;
-    private String resultado= "0-0";   
-    
 
-    public Encuentro(int id_encuentro, LocalDate fechaEnc, String estadoEnCurso, Jugador ganador, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
+    public Encuentro(int id_encuentro, LocalDate fechaEnc, boolean finalizado, Jugador ganador, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
         this.id_encuentro = id_encuentro;
         this.fechaEnc = fechaEnc;
-        this.estadoEnCurso = estadoEnCurso;
+        this.finalizado = finalizado;
         this.ganador = ganador;
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
@@ -28,42 +26,18 @@ public class Encuentro {
         this.activo = activo;
     }
 
-    public Encuentro(LocalDate fechaEnc, String estadoEnCurso, Jugador ganador, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo, String resultado) {
-        this.fechaEnc = fechaEnc;
-        this.estadoEnCurso = estadoEnCurso;
-        this.ganador = ganador;
-        this.jugador1 = jugador1;
-        this.jugador2 = jugador2;
-        this.estadio = estadio;
-        this.torneo = torneo;
-        this.activo = activo;
-        this.resultado = resultado;
-    }
-
-    public Encuentro(int id_encuentro, LocalDate fechaEnc, String estadoEnCurso, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
-        this.id_encuentro = id_encuentro;
-        this.fechaEnc = fechaEnc;
-        this.estadoEnCurso = estadoEnCurso;
-        this.jugador1 = jugador1;
-        this.jugador2 = jugador2;
-        this.estadio = estadio;
-        this.torneo = torneo;
-        this.activo = activo;
-    }
-
-    
-    public Encuentro(LocalDate fechaEnc, String estadoEnCurso, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
-        this.fechaEnc = fechaEnc;
-        this.estadoEnCurso = estadoEnCurso;
-        this.jugador1 = jugador1;
-        this.jugador2 = jugador2;
-        this.estadio = estadio;
-        this.torneo = torneo;
-        this.activo = activo;
-    }
-
-    
     public Encuentro() {
+    }
+
+    public Encuentro(LocalDate fechaEnc, boolean finalizado, Jugador ganador, Jugador jugador1, Jugador jugador2, Estadio estadio, Torneo torneo, boolean activo) {
+        this.fechaEnc = fechaEnc;
+        this.finalizado = finalizado;
+        this.ganador = ganador;
+        this.jugador1 = jugador1;
+        this.jugador2 = jugador2;
+        this.estadio = estadio;
+        this.torneo = torneo;
+        this.activo = activo;
     }
 
     public int getId_encuentro() {
@@ -82,17 +56,17 @@ public class Encuentro {
         this.fechaEnc = fechaEnc;
     }
 
-    public String getEstadoEnCurso() {
-        return estadoEnCurso;
+    public boolean isFinalizado() {
+        return finalizado;
     }
 
-    public void setEstadoEnCurso(String estadoEnCurso) {
-        this.estadoEnCurso = estadoEnCurso;
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
 
     public Jugador getGanador() {
         return ganador;
-    } 
+    }
 
     public void setGanador(Jugador ganador) {
         this.ganador = ganador;
@@ -137,15 +111,10 @@ public class Encuentro {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-       
-    public String getResultado() {
-        return resultado;
-    }
+   
+    
 
-    public void setResultado(String resultado) {
-        this.resultado = resultado;
-    }
-
+   
     @Override
     public String toString() {
         return "idEncuentro=" + id_encuentro + "Fecha de encuentro: " + fechaEnc;

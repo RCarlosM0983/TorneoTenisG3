@@ -10,25 +10,16 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
     private ArrayList<Estadio> estadios;
     private ArrayList<Estadio> estadiosActivas;
     private EstadioData estadioData;
-    private MenuPrincipal1 menu;
 
-    public ListaEstadios(MenuPrincipal1 menu, EstadioData EstadioData) {
+    public ListaEstadios() {
         initComponents();
         
-        this.menu = menu;
-        this.estadioData = EstadioData;
         modelo = new DefaultTableModel();
         
-        estadios = (ArrayList<Estadio>) EstadioData.obtenerEstadios();
-        estadiosActivas = (ArrayList<Estadio>) EstadioData.obtenerEstadiosEnUso();
         
         vaciarTabla();
         armarCabecera();
         llenarTablaTodos();
-    }
-
-    ListaEstadios() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  
     @SuppressWarnings("unchecked")

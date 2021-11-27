@@ -36,12 +36,17 @@ public class VistaTornTen extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jmiEstadio = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jmiSponsor = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jmiPatrocinio = new javax.swing.JMenuItem();
+        jmiActualizar = new javax.swing.JMenuItem();
+        jmiEliminar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jmiLEncuentros = new javax.swing.JMenuItem();
+        jmiCrearEncuentro = new javax.swing.JMenuItem();
         jmTorneo1 = new javax.swing.JMenu();
         jmAltaBajaTorneo1 = new javax.swing.JMenu();
         jmConsultaTorneo1 = new javax.swing.JMenu();
@@ -70,7 +75,7 @@ public class VistaTornTen extends javax.swing.JFrame {
         });
         jMenu1.add(jmiJugador);
 
-        jMenuItem3.setText("jMenuItem3");
+        jMenuItem3.setText("Lista de Jugadores");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -90,6 +95,14 @@ public class VistaTornTen extends javax.swing.JFrame {
         });
         jmiEstadio.add(jMenuItem1);
 
+        jMenuItem4.setText("Lista de Estadios");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jmiEstadio.add(jMenuItem4);
+
         jMenuBar1.add(jmiEstadio);
 
         jMenu3.setText("Sponsor");
@@ -106,7 +119,7 @@ public class VistaTornTen extends javax.swing.JFrame {
 
         jMenu4.setText(" Patrocinio");
 
-        jmiPatrocinio.setText("Agragar Patrocinio");
+        jmiPatrocinio.setText("Agregar Patrocinio");
         jmiPatrocinio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiPatrocinioActionPerformed(evt);
@@ -114,9 +127,30 @@ public class VistaTornTen extends javax.swing.JFrame {
         });
         jMenu4.add(jmiPatrocinio);
 
+        jmiActualizar.setText("Activar/Desactivar ");
+        jmiActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiActualizarActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jmiActualizar);
+
+        jmiEliminar.setText("Eliminar");
+        jmiEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEliminarActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jmiEliminar);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Encuentro");
+        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu5ActionPerformed(evt);
+            }
+        });
 
         jMenuItem2.setText("Formulario");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -125,6 +159,22 @@ public class VistaTornTen extends javax.swing.JFrame {
             }
         });
         jMenu5.add(jMenuItem2);
+
+        jmiLEncuentros.setText("Actualizar Encuentro");
+        jmiLEncuentros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiLEncuentrosActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jmiLEncuentros);
+
+        jmiCrearEncuentro.setText("Crear Encuentro");
+        jmiCrearEncuentro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiCrearEncuentroActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jmiCrearEncuentro);
 
         jMenuBar1.add(jMenu5);
 
@@ -241,16 +291,67 @@ public class VistaTornTen extends javax.swing.JFrame {
         Patrocinios p = new Patrocinios();
         p.setVisible(true);
         jdpEscritorio.add(p);
+        jdpEscritorio.moveToFront(p);
     }//GEN-LAST:event_jmiPatrocinioActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jmiActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiActualizarActionPerformed
+        // TODO add your handling code here:
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
-        VEncuentro e = new VEncuentro();
-        e.setVisible(true);
-        jdpEscritorio.add(e);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+        VActualizarPatrocinio vap = new VActualizarPatrocinio();
+        vap.setVisible(true);
+        jdpEscritorio.add(vap);
+        jdpEscritorio.moveToFront(vap);
+    }//GEN-LAST:event_jmiActualizarActionPerformed
+
+    private void jmiEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEliminarActionPerformed
+        // TODO add your handling code here:
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        VEliminarPatrocinio vep = new VEliminarPatrocinio();
+        vep.setVisible(true);
+        jdpEscritorio.add(vep);
+        jdpEscritorio.moveToFront(vep);
+    }//GEN-LAST:event_jmiEliminarActionPerformed
+
+    private void jmiLEncuentrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiLEncuentrosActionPerformed
+        // TODO add your handling code here:
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        VActualizarEncuentro vae = new VActualizarEncuentro();
+        vae.setVisible(true);
+        jdpEscritorio.add(vae);
+        jdpEscritorio.moveToFront(vae);
+    }//GEN-LAST:event_jmiLEncuentrosActionPerformed
+
+    private void jmiCrearEncuentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCrearEncuentroActionPerformed
+        // TODO add your handling code here:
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        VCrearEncuentro vce = new VCrearEncuentro();
+        vce.setVisible(true);
+        jdpEscritorio.add(vce);
+        jdpEscritorio.moveToFront(vce);
+    }//GEN-LAST:event_jmiCrearEncuentroActionPerformed
+
+    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        ListaEstadios le = new ListaEstadios();
+        le.setVisible(true);
+        jdpEscritorio.add(le);
+        jdpEscritorio.moveToFront(le);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,13 +397,18 @@ public class VistaTornTen extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JDesktopPane jdpEscritorio;
     private javax.swing.JMenu jmAltaBajaTorneo1;
     private javax.swing.JMenu jmConsultaTorneo1;
     private javax.swing.JMenu jmRanking1;
     private javax.swing.JMenu jmTorneo1;
+    private javax.swing.JMenuItem jmiActualizar;
+    private javax.swing.JMenuItem jmiCrearEncuentro;
+    private javax.swing.JMenuItem jmiEliminar;
     private javax.swing.JMenu jmiEstadio;
     private javax.swing.JMenuItem jmiJugador;
+    private javax.swing.JMenuItem jmiLEncuentros;
     private javax.swing.JMenuItem jmiPatrocinio;
     private javax.swing.JMenuItem jmiSponsor;
     // End of variables declaration//GEN-END:variables

@@ -14,15 +14,17 @@ import javax.swing.JOptionPane;
 
 public class PatrocinioData {
         private Connection con;
-        Conexion conexion;
+        
         
     
-    public PatrocinioData(Conexion conexion) {
-        this.con = conexion.getConexion();
+    public PatrocinioData(Conexion conn){ 
+      con = conn.conectar();
     }
     
     public void guardarPatrocinio(Patrocinio patrocinio) {
-     
+     if(existe(patrocinio)){
+         JOptionPane.showMessageDialog(null, "El Patrocinio ya existe");
+     }else{
             String sql = "INSERT INTO patrocinio(id_sponsor, id_jugador, activo) VALUES (?, ?, ?)";
             try {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -35,7 +37,9 @@ public class PatrocinioData {
                JOptionPane.showMessageDialog(null, "Patrocinio guardado con exito.");
              } catch (SQLException ex) {
               JOptionPane.showMessageDialog(null, "Error al guardar Patrocinio ");
-        }}
+             }
+        }
+    }
     
     public void modificarPatrocinio (Patrocinio patrocinio) {
         String sql = "UPDATE patrocinio SET  id_sponsor = ?, id_jugador = ?,  activo = ?  WHERE id_patrocinio = ? ";
@@ -62,12 +66,12 @@ public class PatrocinioData {
         }
 
  }
-    /*
+    
     public Patrocinio buscarPatrocinio (int ID){
-        Patrocinio pat = new Patrocinio();
-        
-        SponsorData sd = new SponsorData(conexion);
-        JugadorData jd=new JugadorData(conexion);
+        Patrocinio p = new Patrocinio();
+        Conexion c = new Conexion();
+        SponsorData sd = new SponsorData(c);
+        JugadorData jd=new JugadorData(c);
         
         String sql = "SELECT * FROM patrocinio Where id_patrocinio = ? ";
         try{
@@ -77,51 +81,23 @@ public class PatrocinioData {
             
             if(rs.next()) {
                 
-                pat.setIdPatrocinio(rs.getInt("id_patrocinio"));
+                p.setIdPatrocinio(rs.getInt("id_patrocinio"));
                 
-                Sponsor spon = s.buscarSponsor(rs.getInt("id_sponsor"));
-                pat.setIdPatrocinador(spon);
-                
-                Jugador jug = j.buscarJugador(rs.getInt("id_jugador"));
-                pat.setIdJugador(jug);
-                
-                pat.setActivo(rs.getBoolean("activo"));
+                Sponsor spon = sd.buscarSponsor(rs.getInt("id_sponsor"));
+                p.setSponsor(spon);
+                Jugador jug = jd.buscarJugador(rs.getInt("id_jugador"));
+                p.setJugador(jug); 
+                p.setActivo(rs.getBoolean("activo"));
                 
             }
         }
         catch(SQLException ex){
             System.out.println("Patrocinio no encontrado: " + ex);
         }
-          return pat;
-}   */
-    
-    public void bajaPatrocinio (int id){
-         String sql = "UPDATE patrocinio SET activo = ? WHERE id_patrocinio = ? ";
-         try{
-         PreparedStatement ps = con.prepareStatement(sql);
-            ps.setBoolean(1, false);
-            ps.setInt(2, id);
-            ps.executeUpdate();
-            ps.close();
-            }
-         catch(SQLException ex){
-             System.out.println("Patrocinio no encontrado: " + ex);
-            }
+          return p;
 }   
+    
  
-    public void altaSponsor (int id){
-          String sql = "UPDATE patrocinio SET activo = ? WHERE id_patrocinio = ? ";
-         try{
-         PreparedStatement ps = con.prepareStatement(sql);
-            ps.setBoolean(1, true);
-            ps.setInt(2, id);
-            ps.executeUpdate();
-            ps.close();
-        }
-        catch(SQLException ex){
-         System.out.println("Patrocinio no encontrado: " + ex);
-        }
-}
       
     public void borrarPatrocinio(int id){
             String sql="DELETE FROM patrocinio WHERE id_patrocinio=?";
@@ -132,42 +108,135 @@ public class PatrocinioData {
                 ps.executeUpdate();
                 ps.close();
 
-                System.out.println("Patrocinio borrado definitivamente");
+                JOptionPane.showMessageDialog(null, "Patrocinio eliminado");
             } 
             catch (SQLException ex) {
-                 System.out.println("Error al borrar "+ex);
+                 System.out.println("Error al eliminar patrocinio ");
             }
     }
     
-    public List<Patrocinio> buscarTodosPatrocinio(){
-          List<Patrocinio> resultados = new ArrayList<>();
+    public ArrayList<Patrocinio> buscarTodosPatrocinio(){
+          Conexion c = new Conexion();
+          ArrayList<Patrocinio> resultados = new ArrayList<>();
           
-         SponsorData s = new SponsorData(conexion);          
-          JugadorData j = new JugadorData(conexion);
+          SponsorData sd = new SponsorData(c);          
+          JugadorData jd = new JugadorData(c);
           
-          String sql = "SELECT * FROM patrocinio ";
-          try{
-              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-              ResultSet rs = ps.executeQuery();
-              while(rs.next()){
-                  Patrocinio patrocinio = new Patrocinio();
-                  patrocinio.setIdPatrocinio(rs.getInt("id_patrocinio"));                
-                  Sponsor spon = s.buscarSponsor(rs.getInt("id_sponsor"));
-                  Jugador jug = j.buscarJugador(rs.getInt("id_jugador"));
-                  boolean activo = rs.getBoolean("activo");
-                  
-                  patrocinio.setSponsor(spon); 
-                  patrocinio.setJugador(jug);
-                  patrocinio.setActivo(activo);
-                  
-                  resultados.add(patrocinio);
-              }
-              ps.close();
-          }
-          catch(SQLException ex){
-              JOptionPane.showMessageDialog(null, "No se encontraron resultados: ");
-          }
+          String sql = "SELECT * FROM patrocinio";
+           try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+        while(rs.next()){
+                 Patrocinio p = new Patrocinio();
+                 Sponsor s = sd.buscarSponsor(rs.getInt("id_sponsor"));
+                 Jugador j = jd.buscarJugador(rs.getInt("id_jugador"));
+                 p.setSponsor(s);
+                 p.setJugador(j);
+                 p.setIdPatrocinio(rs.getInt("id_patrocinio"));
+                 p.setActivo(rs.getBoolean("activo"));
+                 
+                 resultados.add(p);
+            }
+            ps.close();
+            }
+        catch(SQLException ex){
+                System.out.println("No se encontraron resultados: "+ ex);
+            }
         return resultados;
   }
+    
+    public ArrayList<Patrocinio> buscarPatrociniosInactivos(){
+          Conexion c = new Conexion();
+          ArrayList<Patrocinio> inactivos = new ArrayList<>();
+          
+          SponsorData sd = new SponsorData(c);          
+          JugadorData jd = new JugadorData(c);
+          
+          String sql = "SELECT * FROM patrocinio WHERE activo = 0";
+           try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+        while(rs.next()){
+                 Patrocinio p = new Patrocinio();
+                 Sponsor s = sd.buscarSponsor(rs.getInt("id_sponsor"));
+                 Jugador j = jd.buscarJugador(rs.getInt("id_jugador"));
+                 p.setSponsor(s);
+                 p.setJugador(j);
+                 p.setIdPatrocinio(rs.getInt("id_patrocinio"));
+                 p.setActivo(rs.getBoolean("activo"));
+                 
+                 inactivos.add(p);
+            }
+            ps.close();
+            }
+        catch(SQLException ex){
+                System.out.println("No se encontraron resultados: "+ ex);
+            }
+        return inactivos;
+  }
+    public ArrayList<Patrocinio> buscarPatrociniosActivos(){
+          Conexion c = new Conexion();
+          ArrayList<Patrocinio> activos = new ArrayList<>();
+          
+          SponsorData sd = new SponsorData(c);          
+          JugadorData jd = new JugadorData(c);
+          
+          String sql = "SELECT * FROM patrocinio WHERE activo = 1";
+           try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+        while(rs.next()){
+                 Patrocinio p = new Patrocinio();
+                 Sponsor s = sd.buscarSponsor(rs.getInt("id_sponsor"));
+                 Jugador j = jd.buscarJugador(rs.getInt("id_jugador"));
+                 p.setSponsor(s);
+                 p.setJugador(j);
+                 p.setIdPatrocinio(rs.getInt("id_patrocinio"));
+                 p.setActivo(rs.getBoolean("activo"));
+                 
+                 activos.add(p);
+            }
+            ps.close();
+            }
+        catch(SQLException ex){
+                System.out.println("No se encontraron resultados: "+ ex);
+            }
+        return activos;
+  }
+    public void actualizarPatrocinio(Patrocinio p){
+        String sql = "UPDATE patrocinio SET activo = ? WHERE id_patrocinio = ?";
+                
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setBoolean(1,p.isActivo());         
+            ps.setInt(2, p.getIdPatrocinio());
+             
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            
+           if(ps.executeUpdate()>0){
+            JOptionPane.showMessageDialog(null, "Patrocinio actualizado");
+        
+             }else{
+              JOptionPane.showMessageDialog(null, "El Patrocinio no existe"); 
+           }
+            ps.close();
+           } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar Patrocinio");
+        }
+    }
+    public boolean existe(Patrocinio p){
+      boolean existe = false;
+      ArrayList<Patrocinio>patrocinios = this.buscarTodosPatrocinio();
+      for (Patrocinio pat: patrocinios){
+          if(p.getJugador().getIdJugador()== pat.getJugador().getIdJugador() && p.getSponsor().getIdSponsor() == pat.getSponsor().getIdSponsor()){
+              existe = true;
+          }
+      }
+      return existe;
+    }
     
 }

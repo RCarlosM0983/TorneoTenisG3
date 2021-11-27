@@ -240,7 +240,18 @@ public class TorneoData {
         }
         return torneos;
     }
-
+public void eliminarTorneo(int idTorneo){
+     String sql = " DELETE FROM torneos WHERE id_torneo = ? ";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, idTorneo);
+                if(ps.executeUpdate()>0){
+                    JOptionPane.showMessageDialog(null, "Torneo Eliminado");
+                }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar torneo");
+        }
+}
 
   
 }
