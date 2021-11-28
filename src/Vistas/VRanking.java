@@ -10,13 +10,14 @@ import javax.swing.table.DefaultTableModel;
 
 public class VRanking extends javax.swing.JInternalFrame {
     private TorneoData td;
-    private DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultTableModel modelo;
 
     public VRanking() {
         initComponents();  
-   
+        modelo = new DefaultTableModel();
         armarCabecera();
-        llenarTabla();
+        llenarComboTorneo();
+        
     }
 
 
@@ -31,8 +32,11 @@ public class VRanking extends javax.swing.JInternalFrame {
         jtRanking = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jcbTorneo = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        jbCerrar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Ranking");
 
         jLabelEncuentrosJugador.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -57,6 +61,11 @@ public class VRanking extends javax.swing.JInternalFrame {
         jLabel1.setText("Seleccionar Torneo:");
 
         jcbTorneo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jcbTorneo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcbTorneoItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -80,15 +89,16 @@ public class VRanking extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jcbTorneo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jButton1.setText("Volver");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbCerrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jbCerrar.setText("Cerrar");
+        jbCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbCerrarActionPerformed(evt);
             }
         });
 
@@ -97,22 +107,19 @@ public class VRanking extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70))
+                        .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(326, 326, 326))))
+                        .addComponent(jbCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(283, 283, 283))))
             .addGroup(layout.createSequentialGroup()
+                .addGap(157, 157, 157)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(206, 206, 206)
-                        .addComponent(jLabelEncuentrosJugador))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabelEncuentrosJugador)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -125,24 +132,30 @@ public class VRanking extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(jbCerrar)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCerrarActionPerformed
         // TODO add your handling code here:
 
-        //menu.setVisible();
-    }//GEN-LAST:event_jButton1ActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_jbCerrarActionPerformed
+
+    private void jcbTorneoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbTorneoItemStateChanged
+        // TODO add your handling code here:
+        vaciarTabla();
+        llenarTabla();
+    }//GEN-LAST:event_jcbTorneoItemStateChanged
 
     private void armarCabecera() {
         ArrayList<Object>columnas = new ArrayList<>();
         columnas.add("Id Jugador");
         columnas.add("Jugador");       
-       // columnas.add("Puntos");
+        columnas.add("Puntos");
         
         for(Object titulo: columnas){
             modelo.addColumn(titulo);
@@ -158,7 +171,7 @@ public class VRanking extends javax.swing.JInternalFrame {
         posiciones = rd.obtenerTablaPosiciones(id);
         for(Ranking r: posiciones){
             
-           modelo.addRow(new Object[] {r.getJugador(), r.getJugador()});
+           modelo.addRow(new Object[] {r.getJugador().getIdJugador(), r.getJugador().getNombreApellido(), r.getPuntos()});
         }
     }
     
@@ -181,12 +194,12 @@ public class VRanking extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelEncuentrosJugador;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton jbCerrar;
     private javax.swing.JComboBox<Torneo> jcbTorneo;
     private javax.swing.JTable jtRanking;
     // End of variables declaration//GEN-END:variables
