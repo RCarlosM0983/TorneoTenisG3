@@ -32,11 +32,11 @@ public class VistaTornTen extends javax.swing.JFrame {
         jdpEscritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jmiJugador = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jmiFJugador = new javax.swing.JMenuItem();
+        jmiLJugadores = new javax.swing.JMenuItem();
         jmiEstadio = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jmiFEstadio = new javax.swing.JMenuItem();
+        jmiListaEstadios = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jmiSponsor = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -44,13 +44,12 @@ public class VistaTornTen extends javax.swing.JFrame {
         jmiActualizar = new javax.swing.JMenuItem();
         jmiEliminar = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jmiLEncuentros = new javax.swing.JMenuItem();
         jmiCrearEncuentro = new javax.swing.JMenuItem();
         jmTorneo1 = new javax.swing.JMenu();
         jmAltaBajaTorneo1 = new javax.swing.JMenu();
         jmConsultaTorneo1 = new javax.swing.JMenu();
-        jmRanking1 = new javax.swing.JMenu();
+        jmiRanking = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,41 +66,41 @@ public class VistaTornTen extends javax.swing.JFrame {
 
         jMenu1.setText("Jugador");
 
-        jmiJugador.setText("Formulario Jugador");
-        jmiJugador.addActionListener(new java.awt.event.ActionListener() {
+        jmiFJugador.setText("Formulario Jugador");
+        jmiFJugador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiJugadorActionPerformed(evt);
+                jmiFJugadorActionPerformed(evt);
             }
         });
-        jMenu1.add(jmiJugador);
+        jMenu1.add(jmiFJugador);
 
-        jMenuItem3.setText("Lista de Jugadores");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jmiLJugadores.setText("Lista de Jugadores");
+        jmiLJugadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jmiLJugadoresActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(jmiLJugadores);
 
         jMenuBar1.add(jMenu1);
 
         jmiEstadio.setText("Estadio");
 
-        jMenuItem1.setText("Formulario Estadio");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmiFEstadio.setText("Formulario Estadio");
+        jmiFEstadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmiFEstadioActionPerformed(evt);
             }
         });
-        jmiEstadio.add(jMenuItem1);
+        jmiEstadio.add(jmiFEstadio);
 
-        jMenuItem4.setText("Lista de Estadios");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jmiListaEstadios.setText("Lista de Estadios");
+        jmiListaEstadios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jmiListaEstadiosActionPerformed(evt);
             }
         });
-        jmiEstadio.add(jMenuItem4);
+        jmiEstadio.add(jmiListaEstadios);
 
         jMenuBar1.add(jmiEstadio);
 
@@ -152,14 +151,6 @@ public class VistaTornTen extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem2.setText("Formulario");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem2);
-
         jmiLEncuentros.setText("Actualizar Encuentro");
         jmiLEncuentros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,8 +192,13 @@ public class VistaTornTen extends javax.swing.JFrame {
         });
         jmTorneo1.add(jmConsultaTorneo1);
 
-        jmRanking1.setText("Ranking");
-        jmTorneo1.add(jmRanking1);
+        jmiRanking.setText("Ranking");
+        jmiRanking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiRankingActionPerformed(evt);
+            }
+        });
+        jmTorneo1.add(jmiRanking);
 
         jMenuBar1.add(jmTorneo1);
 
@@ -226,23 +222,23 @@ public class VistaTornTen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jmiFEstadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFEstadioActionPerformed
         // TODO add your handling code here:
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         VEstadio ve = new VEstadio();
         ve.setVisible(true);
         jdpEscritorio.add(ve);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmiFEstadioActionPerformed
 
-    private void jmiJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiJugadorActionPerformed
+    private void jmiFJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFJugadorActionPerformed
         // TODO add your handling code here:
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         VJugador vj = new VJugador();
         vj.setVisible(true);
         jdpEscritorio.add(vj);
-    }//GEN-LAST:event_jmiJugadorActionPerformed
+    }//GEN-LAST:event_jmiFJugadorActionPerformed
 
     private void jmAltaBajaTorneo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmAltaBajaTorneo1MouseClicked
         jdpEscritorio.removeAll();
@@ -266,14 +262,14 @@ public class VistaTornTen extends javax.swing.JFrame {
         jdpEscritorio.moveToFront(aC);
     }//GEN-LAST:event_jmConsultaTorneo1MouseClicked
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jmiLJugadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiLJugadoresActionPerformed
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         ListaJugadores aC=new ListaJugadores();
         aC.setVisible(true);
         jdpEscritorio.add(aC);
         jdpEscritorio.moveToFront(aC);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jmiLJugadoresActionPerformed
 
     private void jmiSponsorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSponsorActionPerformed
         // TODO add your handling code here:
@@ -293,11 +289,6 @@ public class VistaTornTen extends javax.swing.JFrame {
         jdpEscritorio.add(p);
         jdpEscritorio.moveToFront(p);
     }//GEN-LAST:event_jmiPatrocinioActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jmiActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiActualizarActionPerformed
         // TODO add your handling code here:
@@ -343,7 +334,7 @@ public class VistaTornTen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu5ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jmiListaEstadiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiListaEstadiosActionPerformed
         // TODO add your handling code here:
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
@@ -351,7 +342,17 @@ public class VistaTornTen extends javax.swing.JFrame {
         le.setVisible(true);
         jdpEscritorio.add(le);
         jdpEscritorio.moveToFront(le);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_jmiListaEstadiosActionPerformed
+
+    private void jmiRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRankingActionPerformed
+        // TODO add your handling code here:
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        VRanking vr = new VRanking();
+        vr.setVisible(true);
+        jdpEscritorio.add(vr);
+        jdpEscritorio.moveToFront(vr);
+    }//GEN-LAST:event_jmiRankingActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,22 +395,21 @@ public class VistaTornTen extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JDesktopPane jdpEscritorio;
     private javax.swing.JMenu jmAltaBajaTorneo1;
     private javax.swing.JMenu jmConsultaTorneo1;
-    private javax.swing.JMenu jmRanking1;
     private javax.swing.JMenu jmTorneo1;
     private javax.swing.JMenuItem jmiActualizar;
     private javax.swing.JMenuItem jmiCrearEncuentro;
     private javax.swing.JMenuItem jmiEliminar;
     private javax.swing.JMenu jmiEstadio;
-    private javax.swing.JMenuItem jmiJugador;
+    private javax.swing.JMenuItem jmiFEstadio;
+    private javax.swing.JMenuItem jmiFJugador;
     private javax.swing.JMenuItem jmiLEncuentros;
+    private javax.swing.JMenuItem jmiLJugadores;
+    private javax.swing.JMenuItem jmiListaEstadios;
     private javax.swing.JMenuItem jmiPatrocinio;
+    private javax.swing.JMenuItem jmiRanking;
     private javax.swing.JMenuItem jmiSponsor;
     // End of variables declaration//GEN-END:variables
 }

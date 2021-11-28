@@ -9,6 +9,7 @@ import Controles.Conexion;
 import Controles.EncuentroData;
 import Controles.JugadorData;
 import Controles.PatrocinioData;
+import Controles.RankingData;
 import Controles.SponsorData;
 import Modelos.Jugador;
 import Modelos.Patrocinio;
@@ -34,9 +35,12 @@ public class TorneoTenisG3 {
         Patrocinio p = new Patrocinio();
        //  System.out.println(pd.buscarTodosPatrocinio());
         // System.out.println(sd.buscarTodosSponsor());
-        System.out.println(ed.buscarEncuentro(2).getGanador());
+       // System.out.println(ed.buscarEncuentro(2).getGanador());
         j = jd.buscarJugador(22);
-        
+       // System.out.println(j);
+        RankingData rd = new RankingData(c);
+        //System.out.println(rd.obtenerGanadores(10));
+        System.out.println(rd.obtenerTablaPosiciones(10));
     }
     
 }

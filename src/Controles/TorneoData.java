@@ -252,6 +252,5 @@ public void eliminarTorneo(int idTorneo){
             JOptionPane.showMessageDialog(null, "Error al eliminar torneo");
         }
 }
-
   
 }
