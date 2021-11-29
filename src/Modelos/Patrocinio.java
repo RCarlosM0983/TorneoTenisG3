@@ -11,7 +11,6 @@ public class Patrocinio {
     private Jugador idJugador;
     private LocalDate fechaInicioContrato;
     private LocalDate fechaFinContrato;
-    //private String indumentaria;
     private boolean activo;
 
     public Patrocinio() {
