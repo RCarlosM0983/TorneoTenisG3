@@ -18,7 +18,7 @@ public class EstadioData {
     }
   
   public void registrarEstadio(Estadio e){
-    String sql = "INSERT INTO estadio(nombre, ciudad, ancho, largo, categoria, habilitado, direccion, capacidad, activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO estadio(nombre, ciudad, ancho, largo, categoria, direccion, capacidad, activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -28,10 +28,9 @@ public class EstadioData {
             ps.setFloat(3, e.getAncho());
             ps.setFloat(4, e.getLargo());
             ps.setString(5, e.getCategoria());
-            ps.setBoolean(6, e.isEnUso());
-            ps.setString(7, e.getDireccionComercial());
-            ps.setInt(8, e.getCapacidad());
-            ps.setBoolean(9, e.isActivo());
+            ps.setString(6, e.getDireccionComercial());
+            ps.setInt(7, e.getCapacidad());
+            ps.setBoolean(8, e.isActivo());
             
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -64,7 +63,6 @@ public class EstadioData {
                 e.setAncho(rs.getFloat("ancho"));
                 e.setLargo(rs.getFloat("largo"));
                 e.setCategoria(rs.getString("categoria"));
-                e.setEnUso(rs.getBoolean("habilitado"));
                 e.setDireccionComercial(rs.getString("direccion"));
                 e.setCapacidad(rs.getInt("capacidad"));
                 e.setActivo(rs.getBoolean("activo"));
@@ -97,7 +95,6 @@ public class EstadioData {
                 e.setAncho(rs.getFloat("ancho"));
                 e.setLargo(rs.getFloat("largo"));
                 e.setCategoria(rs.getString("categoria"));
-                e.setEnUso(rs.getBoolean("habilitado"));
                 e.setDireccionComercial(rs.getString("direccion"));
                 e.setCapacidad(rs.getInt("capacidad"));
                 e.setActivo(rs.getBoolean("activo"));
@@ -128,7 +125,7 @@ public class EstadioData {
     
   public void actualizarEstadio(Estadio e){
         try {
-            String sql = "UPDATE estadio SET nombre = ?, ciudad = ?, ancho = ?, largo = ?, categoria = ?, habilitado = ?, direccion = ?, capacidad = ?, activo = ? WHERE id_estadio = ? ";
+            String sql = "UPDATE estadio SET nombre = ?, ciudad = ?, ancho = ?, largo = ?, categoria = ?, direccion = ?, capacidad = ?, activo = ? WHERE id_estadio = ? ";
             
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);            
             
@@ -137,11 +134,10 @@ public class EstadioData {
             ps.setFloat(3, e.getAncho());
             ps.setFloat(4, e.getLargo());
             ps.setString(5, e.getCategoria());
-            ps.setBoolean(6, e.isEnUso());
-            ps.setString(7, e.getDireccionComercial());
-            ps.setInt(8, e.getCapacidad());
-            ps.setBoolean(9, e.isActivo()); 
-            ps.setInt(10, e.getIdEstadio());
+            ps.setString(6, e.getDireccionComercial());
+            ps.setInt(7, e.getCapacidad());
+            ps.setBoolean(8, e.isActivo()); 
+            ps.setInt(9, e.getIdEstadio());
             
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -158,9 +154,9 @@ public class EstadioData {
         }
   }
   
-  public Estadio buscarEstadio(String nombreEstadio){
+  public Estadio buscarEstadioXNombre(String nombreEstadio){
         Estadio e = new Estadio();
-        String sql = "SELECT * FROM estadio WHERE id_estadio = ? ";
+        String sql = "SELECT * FROM estadio WHERE nombre = ? ";
 
       PreparedStatement ps;
           try {
@@ -176,7 +172,6 @@ public class EstadioData {
                 e.setAncho(rs.getFloat("ancho"));
                 e.setLargo(rs.getFloat("largo"));
                 e.setCategoria(rs.getString("categoria"));
-                e.setEnUso(rs.getBoolean("habilitado"));
                 e.setDireccionComercial(rs.getString("direccion"));
                 e.setCapacidad(rs.getInt("capacidad"));
                 e.setActivo(rs.getBoolean("activo"));
@@ -189,10 +184,10 @@ public class EstadioData {
       return e;
     }
   
-  public ArrayList<Estadio> obtenerEstadiosEnUso(){
+  public ArrayList<Estadio> obtenerEstadiosActivos(){
         
         ArrayList<Estadio> estadios=new ArrayList<>();        
-        String sql="SELECT * FROM estadio WHERE habilitado = 1";
+        String sql="SELECT * FROM estadio WHERE activo = 1";
         
         try {
             PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -206,7 +201,6 @@ public class EstadioData {
                 e.setAncho(rs.getFloat("ancho"));
                 e.setLargo(rs.getFloat("largo"));
                 e.setCategoria(rs.getString("categoria"));
-                e.setEnUso(rs.getBoolean("habilitado"));
                 e.setDireccionComercial(rs.getString("direccion"));
                 e.setCapacidad(rs.getInt("capacidad"));
                 e.setActivo(rs.getBoolean("activo"));

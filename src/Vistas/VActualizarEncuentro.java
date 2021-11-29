@@ -228,6 +228,12 @@ public class VActualizarEncuentro extends javax.swing.JInternalFrame {
         });
 
         jcbTorneo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jcbTorneo.setEnabled(false);
+        jcbTorneo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcbTorneoItemStateChanged(evt);
+            }
+        });
 
         jtfJ1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jtfJ1.setEnabled(false);
@@ -484,9 +490,11 @@ public class VActualizarEncuentro extends javax.swing.JInternalFrame {
 
     private void jcbTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTodosActionPerformed
         // TODO add your handling code here:
-        borrarFilasTabla();
-        jcbEnXT.setSelected(false);
+        
+        
         if(jcbTodos.isSelected()){
+            borrarFilasTabla();
+           jcbEnXT.setSelected(false);
            llenarTablaEncuentros();
            jbBuscar.setEnabled(false);
         }else{
@@ -496,10 +504,19 @@ public class VActualizarEncuentro extends javax.swing.JInternalFrame {
 
     private void jcbEnXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEnXTActionPerformed
         // TODO add your handling code here:
-         borrarFilasTabla();
+        
+        if(jcbEnXT.isSelected()){
+             borrarFilasTabla();
          jbBuscar.setEnabled(true);
          jcbTodos.setSelected(false);
+         jcbTorneo.setEnabled(true);
+        }
+         borrarFilasTabla();
     }//GEN-LAST:event_jcbEnXTActionPerformed
+
+    private void jcbTorneoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbTorneoItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbTorneoItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -41,7 +41,6 @@ public class VEstadio extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jtfNombre = new javax.swing.JTextField();
         jtfAncho = new javax.swing.JTextField();
         jtfLargo = new javax.swing.JTextField();
@@ -49,7 +48,6 @@ public class VEstadio extends javax.swing.JInternalFrame {
         jtfCapacidad = new javax.swing.JTextField();
         jtfDireccion = new javax.swing.JTextField();
         jcbActivo = new javax.swing.JCheckBox();
-        jcbEstado = new javax.swing.JCheckBox();
         jbRegistrar = new javax.swing.JButton();
         jbEliminar = new javax.swing.JButton();
         jbLimpiar = new javax.swing.JButton();
@@ -90,9 +88,6 @@ public class VEstadio extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Dirección");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setText("Estado");
-
         jtfNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jtfAncho.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -121,13 +116,6 @@ public class VEstadio extends javax.swing.JInternalFrame {
         jtfDireccion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jcbActivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        jcbEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jcbEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbEstadoActionPerformed(evt);
-            }
-        });
 
         jbRegistrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbRegistrar.setText("Registrar");
@@ -169,6 +157,7 @@ public class VEstadio extends javax.swing.JInternalFrame {
         jLabel11.setText("Id Estadio");
 
         jtfIdEstadio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtfIdEstadio.setEnabled(false);
         jtfIdEstadio.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtfIdEstadioFocusLost(evt);
@@ -240,11 +229,8 @@ public class VEstadio extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(30, 30, 30)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jcbActivo)
-                                            .addComponent(jcbEstado)))
+                                        .addGap(72, 72, 72)
+                                        .addComponent(jcbActivo))
                                     .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jcbCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -255,17 +241,17 @@ public class VEstadio extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(jtfIdEstadio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfIdEstadio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -273,12 +259,9 @@ public class VEstadio extends javax.swing.JInternalFrame {
                             .addComponent(jLabel7)))
                     .addComponent(jcbActivo, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcbEstado, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(jtfAncho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jtfAncho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -328,13 +311,8 @@ public class VEstadio extends javax.swing.JInternalFrame {
             jtfDireccion.setText("");
             jtfLargo.setText("");
             jtfAncho.setText("");
-            jcbEstado.setSelected(false);
             jcbActivo.setSelected(false);
     }
-    private void jcbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcbEstadoActionPerformed
-
     private void jbLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimpiarActionPerformed
         // TODO add your handling code here:
            this.limpiar();
@@ -342,23 +320,22 @@ public class VEstadio extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
-       if(jtfIdEstadio.getText().isEmpty()){
-           JOptionPane.showMessageDialog(this, "Para buscar ingrese el id estadio");
+       if(jtfNombre.getText().isEmpty()){
+           JOptionPane.showMessageDialog(this, "Para buscar ingrese el nombre");
        }else{
         Conexion c = new Conexion();
         EstadioData ed = new EstadioData(c);
-        int id = Integer.parseInt(jtfIdEstadio.getText());
-        Estadio e = ed.buscarEstadioPorId(id);
+        String nombre = jtfNombre.getText();
+        Estadio e = ed.buscarEstadioXNombre(nombre);
         
         if(e.getNombre() != null){
-            jtfNombre.setText(e.getNombre());
+            jtfIdEstadio.setText(e.getIdEstadio()+"");
             jtfCapacidad.setText(e.getCapacidad()+"");
             jcbCategoria.setSelectedItem(e.getCategoria());
             jtfCiudad.setText(e.getCiudad());
             jtfDireccion.setText(e.getDireccionComercial());
             jtfLargo.setText(e.getLargo()+"");
             jtfAncho.setText(e.getAncho()+"");
-            jcbEstado.setSelected(e.isEnUso());
             jcbActivo.setSelected(e.isActivo());
         }else{
             JOptionPane.showMessageDialog(this, "El estadio no existe");
@@ -379,12 +356,11 @@ public class VEstadio extends javax.swing.JInternalFrame {
        String dir = jtfDireccion.getText();
        float largo = Float.parseFloat(jtfLargo.getText());
        float ancho = Float.parseFloat(jtfAncho.getText());
-       boolean estado = jcbEstado.isEnabled();
-       boolean activo = jcbActivo.isEnabled();
+       boolean activo = jcbActivo.isSelected();
        
        Conexion c = new Conexion();
        EstadioData ed = new EstadioData(c);
-       Estadio e = new Estadio(nombre, ciudad, ancho, largo, categoria, estado, dir, capacidad, activo);
+       Estadio e = new Estadio(nombre, ciudad, ancho, largo, categoria, dir, capacidad, activo);
        ed.registrarEstadio(e);
        
        this.limpiar();
@@ -417,12 +393,11 @@ public class VEstadio extends javax.swing.JInternalFrame {
        String dir = jtfDireccion.getText();
        float largo = Float.parseFloat(jtfLargo.getText());
        float ancho = Float.parseFloat(jtfAncho.getText());
-       boolean estado = jcbEstado.isSelected();
        boolean activo = jcbActivo.isSelected();
        
        Conexion c = new Conexion();
        EstadioData ed = new EstadioData(c);
-       Estadio e = new Estadio(id, nombre, ciudad, ancho, largo, categoria, estado, dir, capacidad, activo);
+       Estadio e = new Estadio(id, nombre, ciudad, ancho, largo, categoria, dir, capacidad, activo);
        ed.actualizarEstadio(e);
        
        this.limpiar();
@@ -487,7 +462,6 @@ public class VEstadio extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -504,7 +478,6 @@ public class VEstadio extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbRegistrar;
     private javax.swing.JCheckBox jcbActivo;
     private javax.swing.JComboBox<String> jcbCategoria;
-    private javax.swing.JCheckBox jcbEstado;
     private javax.swing.JTextField jtfAncho;
     private javax.swing.JTextField jtfCapacidad;
     private javax.swing.JTextField jtfCiudad;

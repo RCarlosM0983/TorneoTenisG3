@@ -10,7 +10,6 @@ public class Estadio {
     private float ancho;
     private float largo;
     private String categoria;
-    private boolean enUso;
     private String direccionComercial;
     private int capacidad;
     private boolean activo;
@@ -18,26 +17,24 @@ public class Estadio {
     public Estadio() {
     }
 
-    public Estadio(int idEstadio, String nombre, String ciudad, float ancho, float largo, String categoria, boolean enUso, String direccionComercial, int capacidad, boolean activo) {
+    public Estadio(int idEstadio, String nombre, String ciudad, float ancho, float largo, String categoria, String direccionComercial, int capacidad, boolean activo) {
         this.idEstadio = idEstadio;
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.ancho = ancho;
         this.largo = largo;
         this.categoria = categoria;
-        this.enUso = enUso;
         this.direccionComercial = direccionComercial;
         this.capacidad = capacidad;
         this.activo = activo;
     }
 
-    public Estadio(String nombre, String ciudad, float ancho, float largo, String categoria, boolean enUso, String direccionComercial, int capacidad, boolean activo) {
+    public Estadio(String nombre, String ciudad, float ancho, float largo, String categoria, String direccionComercial, int capacidad, boolean activo) {
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.ancho = ancho;
         this.largo = largo;
         this.categoria = categoria;
-        this.enUso = enUso;
         this.direccionComercial = direccionComercial;
         this.capacidad = capacidad;
         this.activo = activo;
@@ -107,14 +104,6 @@ public class Estadio {
 
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
-    }
-
-    public boolean isEnUso() {
-        return enUso;
-    }
-
-    public void setEnUso(boolean enUso) {
-        this.enUso = enUso;
     }
 
     public boolean isActivo() {

@@ -285,7 +285,7 @@ private void llenarCJ2(){
 private void cargarEstadios(){
     Conexion c = new Conexion();
     EstadioData ed = new EstadioData(c);   
-        ArrayList<Estadio> estadios= ed.obtenerEstadiosEnUso();        
+        ArrayList<Estadio> estadios= ed.obtenerEstadiosActivos();        
             for (Estadio e: estadios) {
                 jcbEstadio.addItem(e);
             }

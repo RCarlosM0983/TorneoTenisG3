@@ -1,5 +1,6 @@
 package Vistas;
 
+import Controles.Conexion;
 import Controles.EstadioData;
 import Modelos.Estadio;
 import java.util.ArrayList;
@@ -32,8 +33,10 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableEstadios = new javax.swing.JTable();
         jCheckBoxActivos = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Estadios");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -84,13 +87,6 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
                 .addGap(11, 11, 11))
         );
 
-        jButton1.setText("Volver");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,12 +96,10 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(189, 189, 189)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGap(231, 231, 231)
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGap(32, 32, 32)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -114,10 +108,8 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -138,10 +130,6 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
             llenarTablaTodos();
         }
     }//GEN-LAST:event_jCheckBoxActivosActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here: 
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void armarCabecera() {
         ArrayList<Object> titulos = new ArrayList<>();
@@ -164,14 +152,20 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
     }
 
     private void llenarTablaTodos() {
+        Conexion c = new Conexion();
+        EstadioData ed = new EstadioData(c);
+        estadios = ed.obtenerEstadios();
         for (Estadio e : estadios) {
-            modelo.addRow(new Object[]{e.getIdEstadio(), e.getNombre(), e.getCiudad(), e.getDireccionComercial(), e.getAncho(), e.getLargo(), e.getCategoria(), e.getCapacidad(), e.isEnUso()});
+            modelo.addRow(new Object[]{e.getIdEstadio(), e.getNombre(), e.getCiudad(), e.getDireccionComercial(), e.getAncho(), e.getLargo(), e.getCategoria(), e.getCapacidad(), e.isActivo()});
         }
     }
     
     private void llenarTablaActivos() {
-        for (Estadio e : estadiosActivas) {
-            modelo.addRow(new Object[]{e.getIdEstadio(), e.getNombre(), e.getCiudad(), e.getDireccionComercial(), e.getAncho(), e.getLargo(), e.getCategoria(), e.getCapacidad(), e.isEnUso()});
+        Conexion c = new Conexion();
+        EstadioData ed = new EstadioData(c);
+        estadios = ed.obtenerEstadiosActivos();
+        for (Estadio e : estadios) {
+            modelo.addRow(new Object[]{e.getIdEstadio(), e.getNombre(), e.getCiudad(), e.getDireccionComercial(), e.getAncho(), e.getLargo(), e.getCategoria(), e.getCapacidad(), e.isActivo()});
         }
     }
     
@@ -184,7 +178,6 @@ public class ListaEstadios extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBoxActivos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
