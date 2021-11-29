@@ -7,8 +7,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 
-public class JugadorData {
-    
+public class JugadorData {    
     private Connection con;
   
    public JugadorData(Conexion conn){
@@ -84,7 +83,7 @@ public class JugadorData {
         }
   }
 
-   public List<Jugador> obtenerJugadores(){
+   public ArrayList<Jugador> obtenerJugadores(){
         Jugador j = new Jugador();
         ArrayList<Jugador> jugadores=new ArrayList<>();        
         String sql="SELECT * FROM jugador";
@@ -99,7 +98,7 @@ public class JugadorData {
                 j.setActivo(rs.getBoolean("activo"));
                 j.setNombreApellido(rs.getString("nombreApellido"));
                 j.setFechaNac(rs.getDate("fechaNac").toLocalDate());
-                j.setIdJugador(rs.getInt("id_jugador"));
+                j.setIdJugador(rs.getInt("idJugador"));
                 j.setPeso(rs.getFloat("peso"));
                 j.setAltura(rs.getFloat("altura"));
                 j.setEstilo(rs.getString("estilo"));
@@ -148,13 +147,12 @@ public class JugadorData {
     }
    
    public void borrarJugador(int idJugador){
-      String sql = "UPDATE jugador SET activo = false WHERE id_jugador = ?";
+      String sql = "UPDATE jugador SET activo = false WHERE idJugador = ?";
     
       try {
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, idJugador);
-        
-         ResultSet rs =ps.executeQuery();
+        ps.executeUpdate();
         
       if(ps.executeUpdate()>0){
         JOptionPane.showMessageDialog(null, "Jugador borrado");
@@ -163,6 +161,37 @@ public class JugadorData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al eliminar Jugador "+ex);
         }   
+    }
+   
+   public ArrayList<Jugador> obtenerJugadoresActivos(){
+        Jugador j = new Jugador();
+        ArrayList<Jugador> jugadores=new ArrayList<>();        
+        String sql="SELECT * FROM jugador WHERE activo=true";
+        
+        try {
+            PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs= ps.executeQuery();
+        
+            while(rs.next()){
+                
+                j.setDni(rs.getInt("dni"));
+                j.setActivo(rs.getBoolean("activo"));
+                j.setNombreApellido(rs.getString("nombreApellido"));
+                j.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+                j.setIdJugador(rs.getInt("idJugador"));
+                j.setPeso(rs.getFloat("peso"));
+                j.setAltura(rs.getFloat("altura"));
+                j.setEstilo(rs.getString("estilo"));
+                j.setManoHabil(rs.getString("manoHabil"));
+                jugadores.add(j);
+            }
+            
+            ps.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error en buscar Jugadores Activos.");
+        }
+        return jugadores;
     }
    
  }
