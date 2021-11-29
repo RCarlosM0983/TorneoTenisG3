@@ -22,7 +22,7 @@ public class PatrocinioData {
     
     public void guardarPatrocinio(Patrocinio patrocinio) {
      
-            String sql = "INSERT INTO patrocinio (id_patrocinio, id_sponsor, id_jugador, fechaInicioContrato, fechaFinContrato, activo) VALUES (?,?,?,?,?,?))";
+            String sql = "INSERT INTO patrocinio (id_patrocinio, id_sponsor, id_jugador, fechaInicioContrato, fechaFinContrato, activo) VALUES (?,?,?,?,?,?)";
             try {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 
