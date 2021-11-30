@@ -97,6 +97,7 @@ public class VTorneo extends javax.swing.JInternalFrame {
         });
 
         jtId.setEditable(false);
+        jtId.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -212,9 +213,9 @@ public class VTorneo extends javax.swing.JInternalFrame {
 
     private void BtnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnModificarMouseClicked
         
-         if(vacio()){
-            JOptionPane.showMessageDialog(this, "Debe completar los campos");
-        }else{  
+         if(jtId.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Debe buscar un torneo");
+        }else{ 
              
                 String nombre = jtfNombre.getText();
                 LocalDate fecha_ini = jdInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -233,10 +234,12 @@ public class VTorneo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnModificarMouseClicked
 
     private void JbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbEliminarActionPerformed
-
+        if(jtId.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Debe buscar un torneo");
+        }else{
         int id_torneo = Integer.parseInt(jtId.getText());
         torneoData.eliminarTorneo(id_torneo);
-
+        }
     }//GEN-LAST:event_JbEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

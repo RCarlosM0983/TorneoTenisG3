@@ -54,13 +54,32 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Sponsor"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu3ActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmiSponsor">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Formulario Sponsor"/>
+                <Property name="text" type="java.lang.String" value="Registrar Sponsor"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiSponsorActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiEliminarS">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Eliminar Sponsor"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiEliminarSActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiActualizarS">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Actualizar Sponsor"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiActualizarSActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

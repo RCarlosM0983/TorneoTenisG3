@@ -13,6 +13,7 @@ import Modelos.Jugador;
 import Modelos.Patrocinio;
 import Modelos.Sponsor;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -232,6 +233,9 @@ public class VEliminarPatrocinio extends javax.swing.JInternalFrame {
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // TODO add your handling code here:
+        if(jtfId.getText().isEmpty()){
+           JOptionPane.showMessageDialog(this, "Seleccione un patrocinio");
+       }else{
        Conexion c = new Conexion();
        JugadorData jd = new JugadorData(c);
        PatrocinioData pd = new PatrocinioData(c);
@@ -241,6 +245,7 @@ public class VEliminarPatrocinio extends javax.swing.JInternalFrame {
        borrarFilasTabla();
        llenarTablaPatrocinios();
        limpiar();
+        }
     }//GEN-LAST:event_jbEliminarActionPerformed
 
 

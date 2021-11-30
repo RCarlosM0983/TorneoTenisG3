@@ -128,15 +128,18 @@ public class SponsorData {
 
     public void borrarSponsor(int id){
            String sql = " DELETE FROM sponsor WHERE id_sponsor = ? ";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+         PreparedStatement ps;
+            try {
+                ps = con.prepareStatement(sql);
                 ps.setInt(1, id);
-                if(ps.executeUpdate()>0){
-                    JOptionPane.showMessageDialog(null, "Sponsor Eliminado");
-                }
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar sponsor");
-        }
+                ps.executeUpdate();
+                ps.close();
+
+                JOptionPane.showMessageDialog(null, "Sponsor eliminado");
+            } 
+            catch (SQLException ex) {
+                 System.out.println("Error al eliminar Sponsor ");
+            }
     }
 
     public List<Sponsor> buscarTodosSponsor(){

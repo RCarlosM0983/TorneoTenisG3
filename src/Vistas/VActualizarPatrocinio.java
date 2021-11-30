@@ -14,6 +14,7 @@ import Modelos.Patrocinio;
 import Modelos.Sponsor;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -224,6 +225,9 @@ public class VActualizarPatrocinio extends javax.swing.JInternalFrame {
 
     private void jbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarActionPerformed
         // TODO add your handling code here:
+       if(jtfId.getText().isEmpty()){
+           JOptionPane.showMessageDialog(this, "Seleccione un patrocinio");
+       }else{
        Conexion c = new Conexion();
        JugadorData jd = new JugadorData(c);
        PatrocinioData pd = new PatrocinioData(c);
@@ -237,6 +241,7 @@ public class VActualizarPatrocinio extends javax.swing.JInternalFrame {
        borrarFilasTabla();
        llenarTablaPatrocinios();
        limpiar();
+       }
     }//GEN-LAST:event_jbActualizarActionPerformed
 
     private void jtblPatrocinioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtblPatrocinioMouseClicked

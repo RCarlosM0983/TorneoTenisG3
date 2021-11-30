@@ -371,9 +371,9 @@ public class VEstadio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
        Conexion c = new Conexion();
        EstadioData ed = new EstadioData(c);
-       if(vacio()){
-         JOptionPane.showMessageDialog(this, "Debe completar los campos"); 
-       }else{
+        if(jtfIdEstadio.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Debe buscar un estadio");
+        }else{
        ed.borrarEstadio(Integer.parseInt(jtfIdEstadio.getText()));
        
        this.limpiar();
@@ -382,8 +382,8 @@ public class VEstadio extends javax.swing.JInternalFrame {
 
     private void jbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarActionPerformed
         // TODO add your handling code here:
-         if(vacio()){
-            JOptionPane.showMessageDialog(this, "Debe completar los campos");
+         if(jtfIdEstadio.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Debe buscar un estadio");
         }else{
        int id = Integer.parseInt(jtfIdEstadio.getText());
        String nombre = jtfNombre.getText();
