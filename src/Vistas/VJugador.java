@@ -288,6 +288,7 @@ public class VJugador extends javax.swing.JInternalFrame {
             return false;
         }
     }
+    
     private void limpiar(){
             jdcFechaNac.setCalendar(null);
             jcbActivo.setSelected(false);
@@ -295,7 +296,9 @@ public class VJugador extends javax.swing.JInternalFrame {
             jtfDni.setText("");
             jtfNombreApellido.setText("");
             jtfPeso.setText("");  
+            jtfId.setText("");
     }
+    
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
          if(jtfDni.getText().isEmpty()){
@@ -372,6 +375,8 @@ public class VJugador extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if(jtfId.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Debe buscar un jugador");
+        }else if(vacio()){
+            JOptionPane.showMessageDialog(this, "Debe completar los campos");
         }else{  
              
        int dni = Integer.parseInt(jtfDni.getText());

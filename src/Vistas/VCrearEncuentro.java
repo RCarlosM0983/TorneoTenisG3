@@ -89,6 +89,11 @@ public class VCrearEncuentro extends javax.swing.JInternalFrame {
 
         jdcFechaEnc.setDateFormatString("yyyy-MM-dd");
         jdcFechaEnc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jdcFechaEnc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jdcFechaEncFocusLost(evt);
+            }
+        });
         jdcFechaEnc.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jdcFechaEncMouseExited(evt);
@@ -108,6 +113,11 @@ public class VCrearEncuentro extends javax.swing.JInternalFrame {
         jcbJ1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbJ1ActionPerformed(evt);
+            }
+        });
+        jcbJ1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jcbJ1PropertyChange(evt);
             }
         });
 
@@ -248,7 +258,15 @@ public class VCrearEncuentro extends javax.swing.JInternalFrame {
 
     private void jcbJ1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbJ1ActionPerformed
         // TODO add your handling code here:
-       
+        jcbJ2.removeAllItems();
+        llenarCJ2();
+        
+        int index = jcbJ1.getSelectedIndex();
+        if (index>-1) {
+            
+            jcbJ2.removeItemAt(index);
+        }
+        
     }//GEN-LAST:event_jcbJ1ActionPerformed
 
     private void jcbJ2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbJ2ActionPerformed
@@ -258,18 +276,21 @@ public class VCrearEncuentro extends javax.swing.JInternalFrame {
 
     private void jdcFechaEncMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jdcFechaEncMouseExited
         // TODO add your handling code here:
-        
+  
     }//GEN-LAST:event_jdcFechaEncMouseExited
 
     private void jbCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearActionPerformed
         // TODO add your handling code here:
         if(jdcFechaEnc.getDate() == null){
             JOptionPane.showMessageDialog(this, "Debe elegir una fecha");
-        }else{ 
+        }else if (jcbJ1.getSelectedIndex() == -1 || jcbJ2.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(this, "Debe elegir 2 jugadores");
+        }else{
         Conexion c = new Conexion();
         LocalDate fecha = Instant.ofEpochMilli((jdcFechaEnc.getDate()).getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
         EncuentroData ed = new EncuentroData(c);
         Jugador j1 = (Jugador)jcbJ1.getSelectedItem();
+        
         Jugador j2 = (Jugador)jcbJ2.getSelectedItem();
         Estadio e = (Estadio)jcbEstadio.getSelectedItem();
         Torneo t = (Torneo)jcbTorneo.getSelectedItem();
@@ -277,16 +298,21 @@ public class VCrearEncuentro extends javax.swing.JInternalFrame {
         LocalDate fechaFinT = t.getFechaFin();
         Boolean activo = jcbActivo.isSelected();
         Encuentro en = new Encuentro(fecha, false, null, j1, j2, e, t, activo);
+        
         if(fecha.compareTo(fechaIniT) < 0){
                JOptionPane.showMessageDialog(this, "La fecha del encuentro debe ser mayor a la fecha inicial del torneo");
            }else if(fecha.compareTo(fechaFinT) > 0) {
                JOptionPane.showMessageDialog(this, "La fecha del encuentro debe ser menor a la fecha final del torneo");
-           }else if(j1.getIdJugador()== j2.getIdJugador()){
-               JOptionPane.showMessageDialog(this, "Los jugadores deben ser distintos");
+           }else if (fecha.compareTo (LocalDate.now())<0){                     
+                JOptionPane.showMessageDialog(this, "Torneo finalizado, debe elegir un Torneo abierto");
            }else{
             ed.guardarEncuentro(en);
            }
         }
+        jcbJ1.setSelectedIndex(-1);
+        jcbJ2.setSelectedIndex(-1);
+        jdcFechaEnc.setCalendar(null);
+        jcbActivo.setSelected(false);
     }//GEN-LAST:event_jbCrearActionPerformed
 
     private void jcbJ2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbJ2MouseClicked
@@ -310,6 +336,16 @@ public class VCrearEncuentro extends javax.swing.JInternalFrame {
         jtfInicio.setText(((Torneo)jcbTorneo.getSelectedItem()).getFechaInicio()+"");
         jtfFin.setText(((Torneo)jcbTorneo.getSelectedItem()).getFechaFin()+"");
     }//GEN-LAST:event_jcbTorneoItemStateChanged
+
+    private void jcbJ1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jcbJ1PropertyChange
+        // TODO add your handling code here:
+ 
+    }//GEN-LAST:event_jcbJ1PropertyChange
+
+    private void jdcFechaEncFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jdcFechaEncFocusLost
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jdcFechaEncFocusLost
    
 private void llenarCTorneo(){
     Conexion c = new Conexion();
@@ -330,6 +366,7 @@ private void llenarCJ1(){
         for(Jugador j: jugadores){
             jcbJ1.addItem(j);     
         }
+        jcbJ1.setSelectedIndex(-1);
 }       
 private void llenarCJ2(){
     Conexion c = new Conexion();
@@ -338,7 +375,7 @@ private void llenarCJ2(){
         for(Jugador j: jugadores){
             jcbJ2.addItem(j);     
         }
-     
+     jcbJ2.setSelectedIndex(-1);
 }
 private void cargarEstadios(){
     Conexion c = new Conexion();

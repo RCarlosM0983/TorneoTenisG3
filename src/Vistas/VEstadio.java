@@ -294,7 +294,7 @@ public class VEstadio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean vacio(){
-        if(jtfIdEstadio.getText().isEmpty() || jtfNombre.getText().isEmpty()|| jtfCapacidad.getText().isEmpty()|| 
+        if( jtfNombre.getText().isEmpty()|| jtfCapacidad.getText().isEmpty()|| 
           jtfCiudad.getText().isEmpty() || jtfDireccion.getText().isEmpty() || 
            jtfLargo.getText().isEmpty() || jtfAncho.getText().isEmpty()){
             
@@ -347,7 +347,10 @@ public class VEstadio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
          if(vacio()){
             JOptionPane.showMessageDialog(this, "Debe completar los campos");
-        }else{
+        }else if ( Integer.parseInt(jtfCapacidad.getText()) < 2000 || Integer.parseInt(jtfCapacidad.getText()) > 20000000){
+            JOptionPane.showMessageDialog(this, "La capacidad debe ser mayor a 2000 y menor a 20 millones");
+        }
+         else{
         
        String nombre = jtfNombre.getText();
        int capacidad = Integer.parseInt(jtfCapacidad.getText());
