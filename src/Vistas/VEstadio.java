@@ -91,6 +91,11 @@ public class VEstadio extends javax.swing.JInternalFrame {
         jtfNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jtfAncho.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtfAncho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfAnchoActionPerformed(evt);
+            }
+        });
         jtfAncho.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtfAnchoKeyTyped(evt);
@@ -313,6 +318,7 @@ public class VEstadio extends javax.swing.JInternalFrame {
             jtfAncho.setText("");
             jcbActivo.setSelected(false);
     }
+    
     private void jbLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimpiarActionPerformed
         // TODO add your handling code here:
            this.limpiar();
@@ -387,6 +393,10 @@ public class VEstadio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
          if(jtfIdEstadio.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Debe buscar un estadio");
+        }else if(vacio()){
+            JOptionPane.showMessageDialog(this, "Debe completar los campos");
+        }else if ( Integer.parseInt(jtfCapacidad.getText()) < 2000 || Integer.parseInt(jtfCapacidad.getText()) > 20000000){
+            JOptionPane.showMessageDialog(this, "La capacidad debe ser mayor a 2000 y menor a 20 millones");
         }else{
        int id = Integer.parseInt(jtfIdEstadio.getText());
        String nombre = jtfNombre.getText();
@@ -461,6 +471,10 @@ public class VEstadio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ingrese solo números enteros o decimales");
         }
     }//GEN-LAST:event_jtfLargoKeyTyped
+
+    private void jtfAnchoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfAnchoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfAnchoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

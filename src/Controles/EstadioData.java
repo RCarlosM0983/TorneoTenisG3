@@ -119,7 +119,7 @@ public class EstadioData {
                 }
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar estadio");
+            JOptionPane.showMessageDialog(null, "Error al eliminar estadio, se encuentra registrado en un encuentro");
         }
   }
     

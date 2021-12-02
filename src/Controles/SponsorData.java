@@ -138,7 +138,7 @@ public class SponsorData {
                 JOptionPane.showMessageDialog(null, "Sponsor eliminado");
             } 
             catch (SQLException ex) {
-                 System.out.println("Error al eliminar Sponsor ");
+                 JOptionPane.showMessageDialog(null, "No se puede eliminar Sponsor, actualmente es Patrocinador");
             }
     }
 

@@ -146,7 +146,7 @@ public class JugadorData {
                 }
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar jugador"+ex);
+            JOptionPane.showMessageDialog(null, "Error al eliminar jugador, el mismo se encuentra registrado en otro evento");
         }
     }
    
